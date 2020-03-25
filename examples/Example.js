@@ -1,21 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
+import SeeThrough from '../src/SeeThrough/SeeThrough';
 
-import MyComponent from '../src/index';
+export default function Example() {
+  const [active, setActive] = useState(false);
 
-class Example extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+  return (
+    <div>
+      <button onClick={ () => setActive(!active) }>Toggle</button>
 
-  componentDidMount() {}
-
-  render() {
-    return (
-      <div>
-        <MyComponent name='Jack'/>
-      </div>
-    );
-  }
+      <SeeThrough active={ active }>
+        <div>Some text</div>
+      </SeeThrough>
+    </div>
+  );
 }
-
-export default Example;

@@ -1,3 +1,1 @@
-import MyComponent from './MyComponent';
-
-export default MyComponent;
+export * from './SeeThrough/SeeThrough';
