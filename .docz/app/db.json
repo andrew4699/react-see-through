@@ -1,55 +1,28 @@
 {
   "config": {
-    "title": "React See Through",
-    "description": "Draw attention to one element on your page",
+    "title": "react-see-through",
+    "description": "Draw attention to the important elements on your website",
     "menu": [],
     "version": "1.0.0",
     "repository": null,
     "native": false,
     "themeConfig": {},
-    "separator": "-"
+    "separator": "-",
+    "base": "/react-see-through/",
+    "src": "./src",
+    "dest": "./docs"
   },
   "entries": [
     {
-      "key": "README.md",
-      "value": {
-        "id": "04c6e90faac2675aa89e2176d2eec7d8",
-        "filepath": "README.md",
-        "fullpath": "/home/andrew/workspace/react-see-through/README.md",
-        "link": "",
-        "slug": "readme",
-        "route": "/readme",
-        "name": "Readme",
-        "menu": "",
-        "headings": [
-          {
-            "slug": "react-see-through",
-            "depth": 1,
-            "value": "react-see-through"
-          },
-          {
-            "slug": "draw-focus-to-a-single-element-on-your-page",
-            "depth": 2,
-            "value": "Draw focus to a single element on your page."
-          },
-          {
-            "slug": "documentationexamples---github",
-            "depth": 2,
-            "value": "Documentation/Examples  -  GitHub"
-          }
-        ]
-      }
-    },
-    {
-      "key": "src/SeeThrough/SeeThrough.mdx",
+      "key": "src/src/SeeThrough/SeeThrough.mdx",
       "value": {
         "name": "<SeeThrough>",
         "route": "/docs/see-through",
         "id": "55113914b7b5f638fe27614456570a9d",
-        "filepath": "src/SeeThrough/SeeThrough.mdx",
+        "filepath": "src/src/SeeThrough/SeeThrough.mdx",
         "fullpath": "/home/andrew/workspace/react-see-through/src/SeeThrough/SeeThrough.mdx",
         "link": "",
-        "slug": "src-see-through-see-through",
+        "slug": "src-src-see-through-see-through",
         "menu": "",
         "headings": [
           {

@@ -16,11 +16,11 @@ if (hasGatsbyConfig) {
 }
 
 const config = {
-  pathPrefix: '/',
+  pathPrefix: '/react-see-through/',
 
   siteMetadata: {
-    title: 'React See Through',
-    description: 'Draw attention to one element on your page',
+    title: 'react-see-through',
+    description: 'Draw attention to the important elements on your website',
   },
   plugins: [
     {
@@ -45,19 +45,19 @@ const config = {
         open: false,
         'open-browser': false,
         root: '/home/andrew/workspace/react-see-through/.docz',
-        base: '/',
+        base: '/react-see-through/',
         source: './',
-        src: './',
+        src: './src',
         files: '**/*.{md,markdown,mdx}',
         public: '/public',
-        dest: '.docz/dist',
+        dest: './docs',
         d: '.docz/dist',
         editBranch: 'master',
         eb: 'master',
         'edit-branch': 'master',
         config: '',
-        title: 'React See Through',
-        description: 'Draw attention to one element on your page',
+        title: 'react-see-through',
+        description: 'Draw attention to the important elements on your website',
         host: 'localhost',
         port: 3000,
         p: 3000,
