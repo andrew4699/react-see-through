@@ -4,19 +4,23 @@ import './SeeThrough.style.scss';
 import PartialMask from './PartialMask';
 import { withResizeDetector } from 'react-resize-detector';
 
+const emptyRect = {
+  left: 0,
+  top: 0,
+  right: 0,
+  bottom: 0,
+}
+
 const SeeThrough = withResizeDetector(function SeeThrough({ children, active, onClick }) {
   const [wrapper, setWrapper] = useState(null);
 
-  let bounds = { x: 0, y: 0, width: 0, height: 0 };
-  if(wrapper) {
-    const rect = wrapper.getBoundingClientRect();
-    bounds = {
-      x: rect.left,
-      y: rect.top,
-      width: rect.right - rect.left,
-      height: rect.bottom - rect.top,
-    };
-  }
+  const rect = wrapper ? wrapper.getBoundingClientRect() : emptyRect;
+  const bounds = {
+    x: rect.left,
+    y: rect.top,
+    width: rect.right - rect.left,
+    height: rect.bottom - rect.top,
+  };
 
   return (
     <div ref={ setWrapper } className='ReactSeeThrough-wrapper'>
