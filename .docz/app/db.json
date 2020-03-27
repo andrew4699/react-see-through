@@ -23,49 +23,29 @@
         "menu": "",
         "headings": [
           {
-            "slug": "react-npm-package-boilerplate",
+            "slug": "react-see-through",
             "depth": 1,
-            "value": "React NPM Package Boilerplate"
-          },
-          {
-            "slug": "usage",
-            "depth": 2,
-            "value": "Usage"
-          },
-          {
-            "slug": "extra",
-            "depth": 2,
-            "value": "Extra"
-          },
-          {
-            "slug": "npm-equivalent",
-            "depth": 2,
-            "value": "NPM equivalent"
-          },
-          {
-            "slug": "license",
-            "depth": 2,
-            "value": "License"
+            "value": "react-see-through"
           }
         ]
       }
     },
     {
-      "key": "examples/SeeThrough.mdx",
+      "key": "docs/SeeThrough.mdx",
       "value": {
-        "name": "SeeThrough",
-        "menu": "Components",
-        "id": "992419759efbfd2e1431a03762e1d839",
-        "filepath": "examples/SeeThrough.mdx",
-        "fullpath": "/home/andrew/workspace/react-see-through/examples/SeeThrough.mdx",
+        "name": "<SeeThrough>",
+        "id": "9fb0927b5c5f9cee3d392143d5442ba2",
+        "filepath": "docs/SeeThrough.mdx",
+        "fullpath": "/home/andrew/workspace/react-see-through/docs/SeeThrough.mdx",
         "link": "",
-        "slug": "examples-see-through",
-        "route": "/examples-see-through",
+        "slug": "docs-see-through",
+        "route": "/docs-see-through",
+        "menu": "",
         "headings": [
           {
-            "slug": "alert",
+            "slug": "seethrough",
             "depth": 1,
-            "value": "Alert"
+            "value": "SeeThrough"
           },
           {
             "slug": "properties",
@@ -83,33 +63,13 @@
   ],
   "props": [
     {
-      "key": "examples/Example.js",
+      "key": "docs/Example.js",
       "value": [
         {
           "description": "",
           "displayName": "Example",
           "methods": [],
           "actualName": "Example"
-        }
-      ]
-    },
-    {
-      "key": "src/MyComponent/MyComponent.js",
-      "value": [
-        {
-          "description": "",
-          "displayName": "MyComponent",
-          "methods": [],
-          "actualName": "MyComponent",
-          "props": {
-            "name": {
-              "type": {
-                "name": "string"
-              },
-              "required": false,
-              "description": ""
-            }
-          }
         }
       ]
     },

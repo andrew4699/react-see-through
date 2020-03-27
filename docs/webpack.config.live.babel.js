@@ -15,7 +15,7 @@ export default () => ({
     // bundle the client for hot reloading
     // only- means to only hot reload for successful updates
 
-    './examples/index.js'
+    './docs/index.js'
     // the entry point of our app
   ],
 
