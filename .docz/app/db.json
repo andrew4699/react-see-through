@@ -133,7 +133,7 @@
                 "name": "bool"
               },
               "required": false,
-              "description": "Whether or not the see-through is active.\nThe masking effect will is active when ANY <SeeThrough> element is active.",
+              "description": "Whether or not this <SeeThrough> is active.\nCurrently, only one active SeeThrough at a time is supported.",
               "defaultValue": {
                 "value": "false",
                 "computed": false
@@ -147,6 +147,28 @@
               "description": "A function to call when the see through component is clicked. This only works when the component is \"active\".\nThe function is passed the following arguments:\n\n   mask - a boolean indicating whether the click was on the masked (black) or unmasked (non-block) area",
               "defaultValue": {
                 "value": "() => {}",
+                "computed": false
+              }
+            },
+            "className": {
+              "type": {
+                "name": "string"
+              },
+              "required": false,
+              "description": "<SeeThrough> creates a <div> wrapper around all the contained elements.\nThis could break layouts that require very particular element hierarchies, like flex containers.\n\"className\" allows you to style that <div> in-case adding it breaks your layout.",
+              "defaultValue": {
+                "value": "''",
+                "computed": false
+              }
+            },
+            "style": {
+              "type": {
+                "name": "any"
+              },
+              "required": false,
+              "description": "<SeeThrough> creates a <div> wrapper around all the contained elements.\nThis could break layouts that require very particular element hierarchies, like flex containers.\n\"style\" allows you to style that <div> in-case adding it breaks your layout.",
+              "defaultValue": {
+                "value": "{}",
                 "computed": false
               }
             }
