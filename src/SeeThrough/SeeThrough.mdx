@@ -9,20 +9,21 @@ import SeeThrough from './SeeThrough';
 
 # SeeThrough
 
-## Properties
+## Props
 
 <Props of={ SeeThrough } />
 
 ## Basic usage
+### Clicking on the masked (black) area stops the see-through effect.
 
 <Playground>
   {() => {
     const [active, setActive] = useState(false);
     return (
-      <div>
+      <div style={{ padding: '60px' }}>
         <button onClick={ () => setActive(true) }>Activate</button>
-        <SeeThrough active={ active } onClick={ () => setActive(false) }>
-          Some message
+        <SeeThrough active={ active } onClick={ masked => masked && setActive(false) }>
+          Some text on your website
         </SeeThrough>
       </div>
     );

@@ -1,7 +1,7 @@
 {
   "config": {
     "title": "react-see-through",
-    "description": "Draw attention to the important elements on your website",
+    "description": "Draw attention to the important parts of your website",
     "menu": [],
     "version": "1.0.0",
     "repository": null,
@@ -31,14 +31,19 @@
             "value": "SeeThrough"
           },
           {
-            "slug": "properties",
+            "slug": "props",
             "depth": 2,
-            "value": "Properties"
+            "value": "Props"
           },
           {
             "slug": "basic-usage",
             "depth": 2,
             "value": "Basic usage"
+          },
+          {
+            "slug": "clicking-on-the-masked-black-area-stops-the-see-through-effect",
+            "depth": 3,
+            "value": "Clicking on the masked (black) area stops the see-through effect."
           }
         ]
       }
@@ -76,7 +81,7 @@
                 "name": "func"
               },
               "required": false,
-              "description": "A function to call when the see through component is clicked. This only works when the component is \"active\".\nThe function is passed the following arguments:\n\n   mask - a boolean indicating whether the click was on the masked (black) or unmasked (non-block) area",
+              "description": "A function to call when the see-through component is clicked. This only works when the component is \"active\".\nThe function is passed the following arguments:\n\n   masked - a boolean indicating whether the click was on the masked (black) or unmasked (non-block) area",
               "defaultValue": {
                 "value": "() => {}",
                 "computed": false
@@ -101,6 +106,17 @@
               "description": "<SeeThrough> creates a <div> wrapper around all the contained elements.\nThis could break layouts that require very particular element hierarchies, like flex containers.\n\"style\" allows you to style that <div> in-case adding it breaks your layout.",
               "defaultValue": {
                 "value": "{}",
+                "computed": false
+              }
+            },
+            "maskColor": {
+              "type": {
+                "name": "string"
+              },
+              "required": false,
+              "description": "The color of the mask.\nSupports all canvas fillStyle formats, e.g. \"#AAA333\", \"red\", \"rgba(10, 12, 8, 0.2)\", ...",
+              "defaultValue": {
+                "value": "'rgba(0, 0, 0, 0.4)'",
                 "computed": false
               }
             }

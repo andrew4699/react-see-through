@@ -3,5 +3,5 @@ module.exports = {
   src: './src',
   dest: './docs',
   title: 'react-see-through',
-  description: 'Draw attention to the important elements on your website',
+  description: 'Draw attention to the important parts of your website',
 };

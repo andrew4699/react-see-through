@@ -1,7 +1,7 @@
 {
   "name": "react-see-through",
   "version": "1.0.0",
-  "description": "Draw attention to one element on your page",
+  "description": "Draw attention to the important parts of your website",
   "main": "./dist/index.js",
   "scripts": {
     "build": "webpack --config webpack.config.babel.js",

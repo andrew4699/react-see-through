@@ -20,7 +20,7 @@ const config = {
 
   siteMetadata: {
     title: 'react-see-through',
-    description: 'Draw attention to the important elements on your website',
+    description: 'Draw attention to the important parts of your website',
   },
   plugins: [
     {
@@ -57,7 +57,7 @@ const config = {
         'edit-branch': 'master',
         config: '',
         title: 'react-see-through',
-        description: 'Draw attention to the important elements on your website',
+        description: 'Draw attention to the important parts of your website',
         host: 'localhost',
         port: 3000,
         p: 3000,

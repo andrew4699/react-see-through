@@ -19,7 +19,7 @@ function useContainer() {
   return container;
 }
 
-function PartialMask({ exclude, onClick }) {
+function PartialMask({ exclude, maskColor, onClick }) {
   // Setup a canvas to draw the mask
   const [canvas, setCanvas] = useState(null);
   useEffect(() => {
@@ -28,13 +28,15 @@ function PartialMask({ exclude, onClick }) {
     }
 
     const ctx = canvas.getContext('2d');
-    ctx.globalAlpha = 0.4;
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    ctx.fillStyle = maskColor;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     for(const { x, y, width, height } of exclude) {
       ctx.clearRect(x, y, width, height);
     }
-  }, [canvas, exclude]);
+  }, [canvas, exclude, maskColor]);
 
   // Handle canvas events
   const onClickCanvas = useCallback(({ pageX, pageY }) => {
@@ -43,12 +45,12 @@ function PartialMask({ exclude, onClick }) {
     }
 
     // Check if the click was in a masked or unmasked area
-    const insideMask = exclude.some(({ x, y, width, height }) =>
+    const masked = !exclude.some(({ x, y, width, height }) =>
       (x <= pageX && pageX <= x + width) &&
       (y <= pageY && pageY <= y + height)
     );
 
-    onClick(insideMask);
+    onClick(masked);
   }, [canvas, exclude, onClick]);
 
   // Create a container to use this mask
@@ -81,16 +83,19 @@ PartialMask.propTypes = {
   })).isRequired,
 
   /**
-   * A function to call when the partially masked component is clicked.
-   * The function is passed the following arguments:
-   *
-   *    mask - a boolean indicating whether the click was on the masked (black) or unmasked (non-block) area
+   * Same as SeeThrough.onClick
    */
   onClick: PropTypes.func,
+
+  /**
+   * Same as SeeThrough.maskColor
+   */
+  maskColor: PropTypes.string,
 };
 
 PartialMask.defaultProps = {
-  onClick: () => {}, // Do nothing
+  onClick: undefined, // Use SeeThrough defaults
+  maskColor: undefined, // Use SeeThrough defaults
 };
 
 export default PartialMask;
