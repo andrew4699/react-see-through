@@ -33,9 +33,9 @@
             "value": "Draw focus to a single element on your page."
           },
           {
-            "slug": "see-the-documentation--examples",
+            "slug": "documentationexamples---github",
             "depth": 2,
-            "value": "See the documentation & examples"
+            "value": "Documentation/Examples  -  GitHub"
           }
         ]
       }
@@ -44,12 +44,12 @@
       "key": "src/SeeThrough/SeeThrough.mdx",
       "value": {
         "name": "<SeeThrough>",
+        "route": "/docs/see-through",
         "id": "55113914b7b5f638fe27614456570a9d",
         "filepath": "src/SeeThrough/SeeThrough.mdx",
         "fullpath": "/home/andrew/workspace/react-see-through/src/SeeThrough/SeeThrough.mdx",
         "link": "",
         "slug": "src-see-through-see-through",
-        "route": "/src-see-through-see-through",
         "menu": "",
         "headings": [
           {

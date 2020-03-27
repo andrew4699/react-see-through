@@ -3,4 +3,4 @@
 
 TODO: picture here
 
-## [See the documentation & examples](https://andrew4699.github.io/react-see-through/)
+## [Documentation/Examples](https://andrew4699.github.io/react-see-through/docs/see-through) - [GitHub](https://github.com/andrew4699/react-see-through)

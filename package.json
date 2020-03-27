@@ -11,7 +11,7 @@
     "prepublish": "npm run clean && npm run test && npm run build",
     "test": "npm run lint && npm run coverage",
     "docz:dev": "docz dev",
-    "docz:build": "docz build --dest docs",
+    "docz:build": "docz build",
     "docz:serve": "docz build && docz serve"
   },
   "devDependencies": {
