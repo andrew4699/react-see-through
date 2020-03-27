@@ -1,7 +1,7 @@
 {
   "config": {
-    "title": "React Npm Package Boilerplate",
-    "description": "Boilerplate to quickstart React component development",
+    "title": "React See Through",
+    "description": "Draw attention to one element on your page",
     "menu": [],
     "version": "1.0.0",
     "repository": null,
@@ -26,20 +26,30 @@
             "slug": "react-see-through",
             "depth": 1,
             "value": "react-see-through"
+          },
+          {
+            "slug": "draw-focus-to-a-single-element-on-your-page",
+            "depth": 2,
+            "value": "Draw focus to a single element on your page."
+          },
+          {
+            "slug": "see-the-documentation--examples",
+            "depth": 2,
+            "value": "See the documentation & examples"
           }
         ]
       }
     },
     {
-      "key": "docs/SeeThrough.mdx",
+      "key": "src/SeeThrough/SeeThrough.mdx",
       "value": {
         "name": "<SeeThrough>",
-        "id": "9fb0927b5c5f9cee3d392143d5442ba2",
-        "filepath": "docs/SeeThrough.mdx",
-        "fullpath": "/home/andrew/workspace/react-see-through/docs/SeeThrough.mdx",
+        "id": "55113914b7b5f638fe27614456570a9d",
+        "filepath": "src/SeeThrough/SeeThrough.mdx",
+        "fullpath": "/home/andrew/workspace/react-see-through/src/SeeThrough/SeeThrough.mdx",
         "link": "",
-        "slug": "docs-see-through",
-        "route": "/docs-see-through",
+        "slug": "src-see-through-see-through",
+        "route": "/src-see-through-see-through",
         "menu": "",
         "headings": [
           {
@@ -62,17 +72,6 @@
     }
   ],
   "props": [
-    {
-      "key": "docs/Example.js",
-      "value": [
-        {
-          "description": "",
-          "displayName": "Example",
-          "methods": [],
-          "actualName": "Example"
-        }
-      ]
-    },
     {
       "key": "src/SeeThrough/SeeThrough.js",
       "value": [
