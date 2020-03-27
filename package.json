@@ -11,7 +11,10 @@
     "lint": "eslint ./src",
     "prepublish": "npm run clean && npm run test && npm run build",
     "start": "webpack-dev-server --config examples/webpack.config.live.babel.js",
-    "test": "npm run lint && npm run coverage"
+    "test": "npm run lint && npm run coverage",
+    "docz:dev": "docz dev",
+    "docz:build": "docz build",
+    "docz:serve": "docz build && docz serve"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
@@ -29,7 +32,7 @@
     "eslint": "^5.8.0",
     "eslint-plugin-react": "^7.4.0",
     "jest-cli": "^23.6.0",
-    "node-sass": "^4.7.2",
+    "node-sass": "^4.13.1",
     "prop-types": "^15.6.0",
     "react": "^16.9.0",
     "react-addons-test-utils": "^15.5.1",
@@ -49,5 +52,10 @@
   },
   "resolutions": {
     "babel-core": "7.0.0-bridge.0"
+  },
+  "dependencies": {
+    "docz": "^2.2.0",
+    "gatsby-plugin-sass": "^2.2.1",
+    "react-hooks-global-state": "^1.0.0"
   }
 }

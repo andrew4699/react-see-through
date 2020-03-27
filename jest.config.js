@@ -1,4 +1,8 @@
 module.exports = {
+  testPathIgnorePatterns: [
+    '/node_modules/',
+    '/.docz/',
+  ],
   coverageReporters: [
     'json',
     'lcov',

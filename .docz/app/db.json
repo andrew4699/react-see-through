@@ -1,0 +1,148 @@
+{
+  "config": {
+    "title": "React Npm Package Boilerplate",
+    "description": "Boilerplate to quickstart React component development",
+    "menu": [],
+    "version": "1.0.0",
+    "repository": null,
+    "native": false,
+    "themeConfig": {},
+    "separator": "-"
+  },
+  "entries": [
+    {
+      "key": "README.md",
+      "value": {
+        "id": "04c6e90faac2675aa89e2176d2eec7d8",
+        "filepath": "README.md",
+        "fullpath": "/home/andrew/workspace/react-see-through/README.md",
+        "link": "",
+        "slug": "readme",
+        "route": "/readme",
+        "name": "Readme",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "react-npm-package-boilerplate",
+            "depth": 1,
+            "value": "React NPM Package Boilerplate"
+          },
+          {
+            "slug": "usage",
+            "depth": 2,
+            "value": "Usage"
+          },
+          {
+            "slug": "extra",
+            "depth": 2,
+            "value": "Extra"
+          },
+          {
+            "slug": "npm-equivalent",
+            "depth": 2,
+            "value": "NPM equivalent"
+          },
+          {
+            "slug": "license",
+            "depth": 2,
+            "value": "License"
+          }
+        ]
+      }
+    },
+    {
+      "key": "examples/SeeThrough.mdx",
+      "value": {
+        "name": "SeeThrough",
+        "menu": "Components",
+        "id": "992419759efbfd2e1431a03762e1d839",
+        "filepath": "examples/SeeThrough.mdx",
+        "fullpath": "/home/andrew/workspace/react-see-through/examples/SeeThrough.mdx",
+        "link": "",
+        "slug": "examples-see-through",
+        "route": "/examples-see-through",
+        "headings": [
+          {
+            "slug": "alert",
+            "depth": 1,
+            "value": "Alert"
+          },
+          {
+            "slug": "properties",
+            "depth": 2,
+            "value": "Properties"
+          },
+          {
+            "slug": "basic-usage",
+            "depth": 2,
+            "value": "Basic usage"
+          }
+        ]
+      }
+    }
+  ],
+  "props": [
+    {
+      "key": "examples/Example.js",
+      "value": [
+        {
+          "description": "",
+          "displayName": "Example",
+          "methods": [],
+          "actualName": "Example"
+        }
+      ]
+    },
+    {
+      "key": "src/MyComponent/MyComponent.js",
+      "value": [
+        {
+          "description": "",
+          "displayName": "MyComponent",
+          "methods": [],
+          "actualName": "MyComponent",
+          "props": {
+            "name": {
+              "type": {
+                "name": "string"
+              },
+              "required": false,
+              "description": ""
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/SeeThrough/SeeThrough.js",
+      "value": [
+        {
+          "description": "",
+          "displayName": "SeeThrough",
+          "methods": [],
+          "actualName": "SeeThrough",
+          "props": {
+            "children": {
+              "type": {
+                "name": "any"
+              },
+              "required": false,
+              "description": "The elements that that you want to be see-through."
+            },
+            "active": {
+              "type": {
+                "name": "bool"
+              },
+              "required": false,
+              "description": "Whether or not the see-through is active.\nThe masking effect will is active when ANY <SeeThrough> element is active.",
+              "defaultValue": {
+                "value": "false",
+                "computed": false
+              }
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

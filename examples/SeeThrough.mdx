@@ -1,0 +1,28 @@
+---
+name: SeeThrough
+menu: Components
+---
+
+import { useState } from 'react';
+import { Playground, Props } from 'docz'
+import SeeThrough from '../src/SeeThrough/SeeThrough';
+
+# Alert
+
+## Properties
+
+<Props of={ SeeThrough } />
+
+## Basic usage
+
+<Playground>
+  {() => {
+    const [active, setActive] = useState(false);
+    return (
+      <div>
+        <button onClick={ () => setActive(!active) }>Toggle See Through</button>
+        <SeeThrough active={ active }>Some message</SeeThrough>
+      </div>
+    );
+  }}
+</Playground>
