@@ -120,7 +120,6 @@
           "description": "",
           "displayName": "SeeThrough",
           "methods": [],
-          "actualName": "SeeThrough",
           "props": {
             "children": {
               "type": {
@@ -137,6 +136,17 @@
               "description": "Whether or not the see-through is active.\nThe masking effect will is active when ANY <SeeThrough> element is active.",
               "defaultValue": {
                 "value": "false",
+                "computed": false
+              }
+            },
+            "onClick": {
+              "type": {
+                "name": "func"
+              },
+              "required": false,
+              "description": "A function to call when the see through component is clicked. This only works when the component is \"active\".\nThe function is passed the following arguments:\n\n   mask - a boolean indicating whether the click was on the masked (black) or unmasked (non-block) area",
+              "defaultValue": {
+                "value": "() => {}",
                 "computed": false
               }
             }

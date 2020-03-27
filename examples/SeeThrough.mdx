@@ -20,8 +20,10 @@ import SeeThrough from '../src/SeeThrough/SeeThrough';
     const [active, setActive] = useState(false);
     return (
       <div>
-        <button onClick={ () => setActive(!active) }>Toggle See Through</button>
-        <SeeThrough active={ active }>Some message</SeeThrough>
+        <button onClick={ () => setActive(true) }>Activate</button>
+        <SeeThrough active={ active } onClick={ () => setActive(false) }>
+          Some message
+        </SeeThrough>
       </div>
     );
   }}

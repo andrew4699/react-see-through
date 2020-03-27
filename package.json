@@ -56,6 +56,6 @@
   "dependencies": {
     "docz": "^2.2.0",
     "gatsby-plugin-sass": "^2.2.1",
-    "react-hooks-global-state": "^1.0.0"
+    "react-resize-detector": "^4.2.1"
   }
 }
