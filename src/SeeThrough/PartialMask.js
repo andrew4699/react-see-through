@@ -19,7 +19,7 @@ function useContainer() {
   return container;
 }
 
-function PartialMask({ exclude, maskColor, onClick }) {
+export default function PartialMask({ exclude, maskColor, onClick }) {
   // Setup a canvas to draw the mask
   const [canvas, setCanvas] = useState(null);
   useEffect(() => {
@@ -97,5 +97,3 @@ PartialMask.defaultProps = {
   onClick: undefined, // Use SeeThrough defaults
   maskColor: undefined, // Use SeeThrough defaults
 };
-
-export default PartialMask;
