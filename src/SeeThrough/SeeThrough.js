@@ -27,17 +27,6 @@ function getAbsoluteBoundingRect(element) {
   return { x, y, width, height };
 }
 
-/**
- * areSetsEqual returns whether or not the Sets "a" and "b" are equal
- */
-function areSetsEqual(a, b) {
-  if(a.size !== b.size) {
-    return false;
-  }
-
-  return [...a].every(el => b.has(el));
-}
-
 class SeeThrough extends Component {
   state = {
     childrenRefs: new Set(),
@@ -45,26 +34,12 @@ class SeeThrough extends Component {
   }
 
   componentDidMount() {
-    // Children refs become available on mount
-    this.updateChildrenRefs();
-
     // Handle window resizes
     window.addEventListener('resize', this.onWindowResize);
   }
 
-  componentDidUpdate() {
-    this.updateChildrenRefs();
-  }
-
   componentWillUnmount() {
     window.removeEventListener('resize', this.onWindowResize);
-  }
-
-  updateChildrenRefs = () => {
-    const childrenRefs = new Set(Object.values(this.refs));
-    if(!areSetsEqual(childrenRefs, this.state.childrenRefs)) {
-      this.setState({ childrenRefs });
-    }
   }
 
   onWindowResize = () => {
@@ -74,14 +49,21 @@ class SeeThrough extends Component {
     });
   }
 
+  handleChildRef = ref => {
+    this.setState(prevState => {
+      prevState.childrenRefs = new Set([...prevState.childrenRefs, ref]);
+      return prevState;
+    });
+  }
+
   render() {
     const { children, active, onClick, maskColor } = this.props;
 
     const childrenWithRefs = Children.map(children, (child, idx) =>
-      cloneElement(child, { ref: 'child' + idx })
+      cloneElement(child, { ref: this.handleChildRef })
     );
 
-    const bounds = [...this.state.childrenRefs.values()].map(getAbsoluteBoundingRect);
+    const bounds = [...this.state.childrenRefs].map(getAbsoluteBoundingRect);
 
     return (
       <>

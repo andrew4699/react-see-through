@@ -58,17 +58,22 @@
           "displayName": "SeeThrough",
           "methods": [
             {
-              "name": "updateChildrenRefs",
+              "name": "onWindowResize",
               "docblock": null,
               "modifiers": [],
               "params": [],
               "returns": null
             },
             {
-              "name": "onWindowResize",
+              "name": "handleChildRef",
               "docblock": null,
               "modifiers": [],
-              "params": [],
+              "params": [
+                {
+                  "name": "ref",
+                  "type": null
+                }
+              ],
               "returns": null
             }
           ],
