@@ -1,4 +1,4 @@
-import React, { Children, Component, cloneElement } from 'react';
+import React, { Children, cloneElement, useState, useEffect, useMemo, useCallback } from 'react';
 import PropTypes from 'prop-types';
 import PartialMask from './PartialMask';
 import { withResizeDetector } from 'react-resize-detector';
@@ -27,51 +27,46 @@ function getAbsoluteBoundingRect(element) {
   return { x, y, width, height };
 }
 
-class SeeThrough extends Component {
-  state = {
-    childrenRefs: new Set(),
-    windowResizeCount: 0, // Tracking this lets us recompute bounding boxes on window resize
-  }
+/**
+ * Manages a count of how many times the window has been resized since this component was mounted.
+ *
+ * Returns the count of resizes
+ */
+function useWindowResizeCount() {
+  const [windowResizeCount, setWindowResizeCount] = useState(0);
 
-  componentDidMount() {
-    // Handle window resizes
-    window.addEventListener('resize', this.onWindowResize);
-  }
+  useEffect(() => {
+    const resizeHandler = () => setWindowResizeCount(windowResizeCount + 1);
+    window.addEventListener('resize', resizeHandler);
+    return () => window.removeEventListener('resize', resizeHandler);
+  }, [windowResizeCount]);
 
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.onWindowResize);
-  }
+  return windowResizeCount;
+}
 
-  onWindowResize = () => {
-    this.setState(prevState => {
-      prevState.windowResizeCount++;
-      return prevState;
-    });
-  }
+function SeeThrough({ children, active, onClick, maskColor }) {
+  // We want to update the bounds when the window is resized
+  useWindowResizeCount();
 
-  handleChildRef = ref => {
-    this.setState(prevState => {
-      prevState.childrenRefs = new Set([...prevState.childrenRefs, ref]);
-      return prevState;
-    });
-  }
+  // Keep track of refs to all children
+  const [childrenRefs, setChildrenRefs] = useState(new Set());
+  const handleChildRef = useCallback(ref => {
+    if(!ref || childrenRefs.has(ref)) {
+      return;
+    }
 
-  render() {
-    const { children, active, onClick, maskColor } = this.props;
+    setChildrenRefs(new Set([...childrenRefs, ref]));
+  }, [childrenRefs]);
 
-    const childrenWithRefs = Children.map(children, (child, idx) =>
-      cloneElement(child, { ref: this.handleChildRef })
-    );
+  // Figure out which areas we want to mask
+  const bounds = useMemo(() => [...childrenRefs].map(getAbsoluteBoundingRect), [childrenRefs]);
 
-    const bounds = [...this.state.childrenRefs].map(getAbsoluteBoundingRect);
-
-    return (
-      <>
-        { childrenWithRefs }
-        { active && <PartialMask exclude={ bounds } onClick={ onClick } maskColor={ maskColor } /> }
-      </>
-    );
-  }
+  return (
+    <>
+      { Children.map(children, child => cloneElement(child, { ref: handleChildRef })) }
+      { active && <PartialMask exclude={ bounds } onClick={ onClick } maskColor={ maskColor } /> }
+    </>
+  );
 }
 
 SeeThrough.propTypes = {

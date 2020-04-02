@@ -56,27 +56,7 @@
         {
           "description": "",
           "displayName": "SeeThrough",
-          "methods": [
-            {
-              "name": "onWindowResize",
-              "docblock": null,
-              "modifiers": [],
-              "params": [],
-              "returns": null
-            },
-            {
-              "name": "handleChildRef",
-              "docblock": null,
-              "modifiers": [],
-              "params": [
-                {
-                  "name": "ref",
-                  "type": null
-                }
-              ],
-              "returns": null
-            }
-          ],
+          "methods": [],
           "actualName": "SeeThrough",
           "props": {
             "children": {
