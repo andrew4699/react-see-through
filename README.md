@@ -16,6 +16,5 @@
 ## Future Plans
 * See-through multiple elements at once
 * Allow interacting (click, hover, etc...) with the unmasked area
-* Do it without a <div> wrapper
 * Fade-out animation
 * Better documentation styling

@@ -23,7 +23,7 @@ import SeeThrough from './SeeThrough';
       <div style={{ padding: '60px' }}>
         <button onClick={ () => setActive(true) }>Activate</button>
         <SeeThrough active={ active } onClick={ masked => masked && setActive(false) }>
-          Some text on your website
+          <div>Some text on your website</div>
         </SeeThrough>
       </div>
     );

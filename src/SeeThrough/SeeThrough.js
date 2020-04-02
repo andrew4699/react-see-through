@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { Children, Component, cloneElement } from 'react';
 import PropTypes from 'prop-types';
 import PartialMask from './PartialMask';
 import { withResizeDetector } from 'react-resize-detector';
@@ -28,56 +28,90 @@ function getAbsoluteBoundingRect(element) {
 }
 
 /**
- * Manages a count of how many times the window has been resized since this component was mounted.
- * @returns the count of resizes
+ * areSetsEqual returns whether or not the Sets "a" and "b" are equal
  */
-function useWindowResizeCount() {
-  const [windowResizeCount, setWindowResizeCount] = useState(0);
+function areSetsEqual(a, b) {
+  if(a.size !== b.size) {
+    return false;
+  }
 
-  useEffect(() => {
-    const resizeHandler = () => setWindowResizeCount(windowResizeCount + 1);
-    window.addEventListener('resize', resizeHandler);
-    return () => window.removeEventListener('resize', resizeHandler);
-  }, [windowResizeCount]);
-
-  return windowResizeCount;
+  return [...a].every(el => b.has(el));
 }
 
-// withResizeDetector re-renders the component when its width/height change
-// and it injects "width" and "height" props, but we don't use those
-const SeeThrough = withResizeDetector(function SeeThrough(props) {
-  const { children, active, onClick, className, style, maskColor } = props;
+class SeeThrough extends Component {
+  state = {
+    childrenRefs: new Set(),
+    windowResizeCount: 0, // Tracking this lets us recompute bounding boxes on window resize
+  }
 
-  // Track window resizes so we can re-render appropriately
-  const windowResizeCount = useWindowResizeCount();
+  componentDidMount() {
+    // Children refs become available on mount
+    this.updateChildrenRefs();
 
-  // Figure out the size of the children
-  const [wrapper, setWrapper] = useState(null);
-  const bounds = useMemo(() => {
-    if(!wrapper) {
-      return { x: 0, y: 0, width: 0, height: 0 };
+    // Handle window resizes
+    window.addEventListener('resize', this.onWindowResize);
+  }
+
+  componentDidUpdate() {
+    this.updateChildrenRefs();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onWindowResize);
+  }
+
+  updateChildrenRefs = () => {
+    const childrenRefs = new Set(Object.values(this.refs));
+    if(!areSetsEqual(childrenRefs, this.state.childrenRefs)) {
+      this.setState({ childrenRefs });
     }
+  }
 
-    return getAbsoluteBoundingRect(wrapper);
-  }, [windowResizeCount, getAbsoluteBoundingRect, wrapper]);
+  onWindowResize = () => {
+    this.setState(prevState => {
+      prevState.windowResizeCount++;
+      return prevState;
+    });
+  }
 
-  return (
-    <div ref={ setWrapper } className={ className } style={ style }>
-      { children }
-      { active && <PartialMask exclude={ [bounds] } onClick={ onClick } maskColor={ maskColor } /> }
-    </div>
-  );
-});
+  render() {
+    const { children, active, onClick, maskColor } = this.props;
+
+    const childrenWithRefs = Children.map(children, (child, idx) =>
+      cloneElement(child, { ref: 'child' + idx })
+    );
+
+    const bounds = [...this.state.childrenRefs.values()].map(getAbsoluteBoundingRect);
+
+    return (
+      <>
+        { childrenWithRefs }
+        { active && <PartialMask exclude={ bounds } onClick={ onClick } maskColor={ maskColor } /> }
+      </>
+    );
+  }
+}
 
 SeeThrough.propTypes = {
   /**
-   * The elements that that you want to be see-through.
+   * The element(s) that that you want to be see-through.
+   * **DIRECT STRINGS ARE NOT ALLOWED.** That is, you cannot do something like:
+   *
+   *    `<SeeThrough>Some text on your page</SeeThrough>`
+   *
+   * Instead, you must have something like
+   *
+   *    `<SeeThrough><div>Some text on your page</div></SeeThrough>`
+   *
    */
-  children: PropTypes.any,
+  children: PropTypes.oneOfType([
+    PropTypes.element,
+    PropTypes.arrayOf(PropTypes.element),
+  ]),
 
   /**
    * Whether or not this <SeeThrough> is active.
-   * Currently, only one active SeeThrough at a time is supported.
+   * Currently, only one active SeeThrough at a time is supported, but it can have multiple children.
    */
   active: PropTypes.bool,
 
@@ -90,20 +124,6 @@ SeeThrough.propTypes = {
   onClick: PropTypes.func,
 
   /**
-   * <SeeThrough> creates a <div> wrapper around all the contained elements.
-   * This could break layouts that require very particular element hierarchies, like flex containers.
-   * "className" allows you to style that <div> in-case adding it breaks your layout.
-   */
-  className: PropTypes.string,
-
-  /**
-   * <SeeThrough> creates a <div> wrapper around all the contained elements.
-   * This could break layouts that require very particular element hierarchies, like flex containers.
-   * "style" allows you to style that <div> in-case adding it breaks your layout.
-   */
-  style: PropTypes.any,
-
-  /**
    * The color of the mask.
    * Supports all canvas fillStyle formats, e.g. "#AAA333", "red", "rgba(10, 12, 8, 0.2)", ...
    */
@@ -113,9 +133,9 @@ SeeThrough.propTypes = {
 SeeThrough.defaultProps = {
   active: false,
   onClick: () => {}, // Do nothing
-  className: '',
-  style: {},
   maskColor: 'rgba(0, 0, 0, 0.4)',
 };
 
-export default SeeThrough;
+// withResizeDetector re-renders the component when its width/height change
+// and it injects "width" and "height" props, but we don't use those
+export default withResizeDetector(SeeThrough);

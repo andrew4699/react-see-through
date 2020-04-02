@@ -1,6 +1,6 @@
 {
   "name": "react-see-through",
-  "version": "1.0.0",
+  "version": "0.1.0",
   "description": "Draw attention to the important parts of your website",
   "main": "./dist/index.js",
   "scripts": {
@@ -8,11 +8,10 @@
     "clean": "rm -rf dist coverage",
     "coverage": "jest --coverage",
     "lint": "eslint ./src",
-    "prepublish": "npm run clean && npm run test && npm run build",
-    "test": "npm run lint && npm run coverage",
+    "prepublish": "yarn clean && yarn test && yarn build",
+    "test": "yarn lint && yarn coverage",
     "docz:dev": "docz dev",
-    "docz:build": "docz build",
-    "docz:serve": "docz build && docz serve"
+    "docz:build": "docz build"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",

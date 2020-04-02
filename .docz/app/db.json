@@ -3,7 +3,7 @@
     "title": "react-see-through",
     "description": "Draw attention to the important parts of your website",
     "menu": [],
-    "version": "1.0.0",
+    "version": "0.1.0",
     "repository": null,
     "native": false,
     "themeConfig": {},
@@ -56,21 +56,48 @@
         {
           "description": "",
           "displayName": "SeeThrough",
-          "methods": [],
+          "methods": [
+            {
+              "name": "updateChildrenRefs",
+              "docblock": null,
+              "modifiers": [],
+              "params": [],
+              "returns": null
+            },
+            {
+              "name": "onWindowResize",
+              "docblock": null,
+              "modifiers": [],
+              "params": [],
+              "returns": null
+            }
+          ],
+          "actualName": "SeeThrough",
           "props": {
             "children": {
               "type": {
-                "name": "any"
+                "name": "union",
+                "value": [
+                  {
+                    "name": "element"
+                  },
+                  {
+                    "name": "arrayOf",
+                    "value": {
+                      "name": "element"
+                    }
+                  }
+                ]
               },
               "required": false,
-              "description": "The elements that that you want to be see-through."
+              "description": "The element(s) that that you want to be see-through.\n**DIRECT STRINGS ARE NOT ALLOWED.** That is, you cannot do something like:\n\n   `<SeeThrough>Some text on your page</SeeThrough>`\n\nInstead, you must have something like\n\n   `<SeeThrough><div>Some text on your page</div></SeeThrough>`"
             },
             "active": {
               "type": {
                 "name": "bool"
               },
               "required": false,
-              "description": "Whether or not this <SeeThrough> is active.\nCurrently, only one active SeeThrough at a time is supported.",
+              "description": "Whether or not this <SeeThrough> is active.\nCurrently, only one active SeeThrough at a time is supported, but it can have multiple children.",
               "defaultValue": {
                 "value": "false",
                 "computed": false
@@ -84,28 +111,6 @@
               "description": "A function to call when the see-through component is clicked. This only works when the component is \"active\".\nThe function is passed the following arguments:\n\n   masked - a boolean indicating whether the click was on the masked (black) or unmasked (non-block) area",
               "defaultValue": {
                 "value": "() => {}",
-                "computed": false
-              }
-            },
-            "className": {
-              "type": {
-                "name": "string"
-              },
-              "required": false,
-              "description": "<SeeThrough> creates a <div> wrapper around all the contained elements.\nThis could break layouts that require very particular element hierarchies, like flex containers.\n\"className\" allows you to style that <div> in-case adding it breaks your layout.",
-              "defaultValue": {
-                "value": "''",
-                "computed": false
-              }
-            },
-            "style": {
-              "type": {
-                "name": "any"
-              },
-              "required": false,
-              "description": "<SeeThrough> creates a <div> wrapper around all the contained elements.\nThis could break layouts that require very particular element hierarchies, like flex containers.\n\"style\" allows you to style that <div> in-case adding it breaks your layout.",
-              "defaultValue": {
-                "value": "{}",
                 "computed": false
               }
             },
