@@ -24,7 +24,7 @@
   },
   "license": "MIT",
   "author": "Andrew Guterman",
-  "main": "./dist/index.js",
+  "main": "index.js",
   "scripts": {
     "build": "webpack --config webpack.config.babel.js",
     "clean": "rm -rf dist coverage",
