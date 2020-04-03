@@ -3,7 +3,7 @@
 ## Draw attention to the important parts of your website
 ### Example
 ![Example](example.png)
-**\* react-see-through is used here to create the black mask above everything except the tutorial - [source](https://calsynk.com)**
+**\* react-see-through is used here to create the black mask above everything except the tutorial [(source)](https://calsynk.com)**
 
 ## Use cases
 * Slack, Discord, and many other popular services use this type of effect for tutorials

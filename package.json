@@ -2,7 +2,18 @@
   "name": "react-see-through",
   "version": "0.1.0",
   "description": "Draw attention to the important parts of your website",
-  "main": "./dist/index.js",
+  "keywords": [
+    "react", "see", "through", "react-see-through", "tutorial", "guide",
+    "focus", "attention", "blackout", "mask", "overlay", "transparent", "expose"
+  ],
+  "homepage": "https://andrew4699.github.io/react-see-through/",
+  "repository": "github:andrew4699/react-see-through",
+  "bugs": {
+    "url": "https://github.com/andrew4699/react-see-through/issues"
+  },
+  "license": "MIT",
+  "author": "Andrew Guterman",
+  "browser": "./dist/index.js",
   "scripts": {
     "build": "webpack --config webpack.config.babel.js",
     "clean": "rm -rf dist coverage",

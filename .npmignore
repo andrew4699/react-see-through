@@ -14,6 +14,7 @@ package-lock.json
 yarn.lock
 
 # project files
+.docz
 src
 test
 docs
