@@ -1,10 +1,21 @@
 {
   "name": "react-see-through",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Draw attention to the important parts of your website",
   "keywords": [
-    "react", "see", "through", "react-see-through", "tutorial", "guide",
-    "focus", "attention", "blackout", "mask", "overlay", "transparent", "expose"
+    "react",
+    "see",
+    "through",
+    "react-see-through",
+    "tutorial",
+    "guide",
+    "focus",
+    "attention",
+    "blackout",
+    "mask",
+    "overlay",
+    "transparent",
+    "expose"
   ],
   "homepage": "https://andrew4699.github.io/react-see-through/",
   "repository": "github:andrew4699/react-see-through",
