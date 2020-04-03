@@ -15,10 +15,16 @@ yarn.lock
 
 # project files
 .docz
+config
 src
 test
 docs
 CHANGELOG.md
+example.png
+doczrc.js
+gatsby-config.js
+jest.config.js
+webpack.config.babel.js
 .travis.yml
 .editorconfig
 .eslintignore

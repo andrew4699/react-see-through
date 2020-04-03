@@ -5,6 +5,13 @@
 ![Example](example.png)
 **\* react-see-through is used here to create the black mask above everything except the tutorial [(source)](https://calsynk.com)**
 
+## Installation
+`npm install --save react-see-through`
+
+or
+
+`yarn add react-see-through`
+
 ## Use cases
 * Slack, Discord, and many other popular services use this type of effect for tutorials
   * This lets them direct users' attention to particular elements being introduced.

@@ -1,1 +1,2 @@
-export * from './SeeThrough/SeeThrough';
+import SeeThrough from './SeeThrough/SeeThrough';
+export default SeeThrough;
