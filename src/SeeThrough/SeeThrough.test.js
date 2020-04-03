@@ -12,7 +12,7 @@ describe('SeeThrough', () => {
 });
 
 describe('SeeThrough#inactive', () => {
-  const simpleStringChild = <SeeThrough>{ simpleString }</SeeThrough>;
+  const simpleStringChild = <SeeThrough><div>{ simpleString }</div></SeeThrough>;
 
   it('should render the children', () => {
     expect(render(simpleStringChild).text()).toContain(simpleString);
@@ -20,7 +20,7 @@ describe('SeeThrough#inactive', () => {
 });
 
 describe('SeeThrough#active', () => {
-  const simpleStringChild = <SeeThrough active>{ simpleString }</SeeThrough>;
+  const simpleStringChild = <SeeThrough active><div>{ simpleString }</div></SeeThrough>;
 
   it('should render the children', () => {
     expect(render(simpleStringChild).text()).toContain(simpleString);

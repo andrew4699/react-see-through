@@ -8,7 +8,7 @@
     "clean": "rm -rf dist coverage",
     "coverage": "jest --coverage",
     "lint": "eslint ./src",
-    "prepublish": "yarn clean && yarn test && yarn build",
+    "prepublishOnly": "yarn clean && yarn test && yarn build",
     "test": "yarn lint && yarn coverage",
     "docz:dev": "docz dev",
     "docz:build": "docz build"
@@ -24,10 +24,12 @@
     "chai": "^4.1.2",
     "clean-webpack-plugin": "^0.1.16",
     "css-loader": "^1.0.1",
+    "docz": "^2.3.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eslint": "^5.8.0",
     "eslint-plugin-react": "^7.4.0",
+    "gatsby-plugin-sass": "^2.2.1",
     "jest-cli": "^23.6.0",
     "node-sass": "^4.13.1",
     "prop-types": "^15.6.0",
@@ -51,8 +53,6 @@
     "babel-core": "7.0.0-bridge.0"
   },
   "dependencies": {
-    "docz": "^2.2.0",
-    "gatsby-plugin-sass": "^2.2.1",
     "react-resize-detector": "^4.2.1"
   }
 }
