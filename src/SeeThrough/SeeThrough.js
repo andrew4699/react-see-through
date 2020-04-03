@@ -1,4 +1,4 @@
-import React, { Children, cloneElement, useState, useEffect, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import PropTypes from 'prop-types';
 import PartialMask from './PartialMask';
 import { withResizeDetector } from 'react-resize-detector';
@@ -28,6 +28,15 @@ function getAbsoluteBoundingRect(element) {
 }
 
 /**
+ * Returns whether or not this is being rendered by the server
+ *
+ * Copied from https://github.com/maslianok/react-resize-detector
+ */
+function isSSR() {
+  return typeof window === 'undefined';
+}
+
+/**
  * Manages a count of how many times the window has been resized since this component was mounted.
  *
  * Returns the count of resizes
@@ -36,6 +45,10 @@ function useWindowResizeCount() {
   const [windowResizeCount, setWindowResizeCount] = useState(0);
 
   useEffect(() => {
+    if(isSSR()) {
+      return;
+    }
+
     const resizeHandler = () => setWindowResizeCount(windowResizeCount + 1);
     window.addEventListener('resize', resizeHandler);
     return () => window.removeEventListener('resize', resizeHandler);
@@ -44,47 +57,32 @@ function useWindowResizeCount() {
   return windowResizeCount;
 }
 
-function SeeThrough({ children, active, onClick, maskColor }) {
+function SeeThrough({ children, active, onClick, maskColor, className, style }) {
   // We want to update the bounds when the window is resized
   useWindowResizeCount();
 
-  // Keep track of refs to all children
-  const [childrenRefs, setChildrenRefs] = useState(new Set());
-  const handleChildRef = useCallback(ref => {
-    if(!ref || childrenRefs.has(ref)) {
-      return;
-    }
+  // Keep track of a ref to the wrapper
+  const [wrapper, setWrapper] = useState(null);
 
-    setChildrenRefs(new Set([...childrenRefs, ref]));
-  }, [childrenRefs]);
-
-  // Figure out which areas we want to mask
-  const bounds = useMemo(() => [...childrenRefs].map(getAbsoluteBoundingRect), [childrenRefs]);
+  // Figure out which area we want to mask
+  let bounds = { x: 0, y: 0, width: 0, height: 0 };
+  if(wrapper) {
+    bounds = getAbsoluteBoundingRect(wrapper);
+  }
 
   return (
-    <>
-      { Children.map(children, child => cloneElement(child, { ref: handleChildRef })) }
-      { active && <PartialMask exclude={ bounds } onClick={ onClick } maskColor={ maskColor } /> }
-    </>
+    <div ref={ setWrapper } className={ className } style={ style }>
+      { children }
+      { active && <PartialMask exclude={ [bounds] } onClick={ onClick } maskColor={ maskColor } /> }
+    </div>
   );
 }
 
 SeeThrough.propTypes = {
   /**
    * The element(s) that that you want to be see-through.
-   * **DIRECT STRINGS ARE NOT ALLOWED.** That is, you cannot do something like:
-   *
-   *    `<SeeThrough>Some text on your page</SeeThrough>`
-   *
-   * Instead, you must have something like
-   *
-   *    `<SeeThrough><div>Some text on your page</div></SeeThrough>`
-   *
    */
-  children: PropTypes.oneOfType([
-    PropTypes.element,
-    PropTypes.arrayOf(PropTypes.element),
-  ]),
+  children: PropTypes.node,
 
   /**
    * Whether or not this <SeeThrough> is active.
@@ -101,6 +99,24 @@ SeeThrough.propTypes = {
   onClick: PropTypes.func,
 
   /**
+   * <SeeThrough> creates a <div> wrapper around all the contained elements.
+   * This could break layouts that require very particular element hierarchies, like flex containers.
+   * "className" allows you to style that <div> in-case adding it breaks your layout.
+   *
+   * There is currently no way to avoid having the <div> container due to limitations of React refs.
+   */
+  className: PropTypes.string,
+
+  /**
+   * <SeeThrough> creates a <div> wrapper around all the contained elements.
+   * This could break layouts that require very particular element hierarchies, like flex containers.
+   * "style" allows you to style that <div> in-case adding it breaks your layout.
+   *
+   * There is currently no way to avoid having the <div> container due to limitations of React refs.
+   */
+  style: PropTypes.any,
+
+  /**
    * The color of the mask.
    * Supports all canvas fillStyle formats, e.g. "#AAA333", "red", "rgba(10, 12, 8, 0.2)", ...
    */
@@ -110,6 +126,8 @@ SeeThrough.propTypes = {
 SeeThrough.defaultProps = {
   active: false,
   onClick: () => {}, // Do nothing
+  className: '',
+  style: {},
   maskColor: 'rgba(0, 0, 0, 0.4)',
 };
 

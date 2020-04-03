@@ -3,8 +3,8 @@
     "title": "react-see-through",
     "description": "Draw attention to the important parts of your website",
     "menu": [],
-    "version": "0.1.0",
-    "repository": null,
+    "version": "0.1.4",
+    "repository": "https://github.com/andrew4699/react-see-through",
     "native": false,
     "themeConfig": {},
     "separator": "-",
@@ -21,7 +21,8 @@
         "id": "55113914b7b5f638fe27614456570a9d",
         "filepath": "src/src/SeeThrough/SeeThrough.mdx",
         "fullpath": "/home/andrew/workspace/react-see-through/src/SeeThrough/SeeThrough.mdx",
-        "link": "",
+        "link": "https://github.com/andrew4699/react-see-through/edit/master/src/src/src/SeeThrough/SeeThrough.mdx",
+        "hidden": false,
         "slug": "src-src-see-through-see-through",
         "menu": "",
         "headings": [
@@ -34,6 +35,11 @@
             "slug": "props",
             "depth": 2,
             "value": "Props"
+          },
+          {
+            "slug": "importing",
+            "depth": 2,
+            "value": "Importing"
           },
           {
             "slug": "basic-usage",
@@ -61,21 +67,10 @@
           "props": {
             "children": {
               "type": {
-                "name": "union",
-                "value": [
-                  {
-                    "name": "element"
-                  },
-                  {
-                    "name": "arrayOf",
-                    "value": {
-                      "name": "element"
-                    }
-                  }
-                ]
+                "name": "node"
               },
               "required": false,
-              "description": "The element(s) that that you want to be see-through.\n**DIRECT STRINGS ARE NOT ALLOWED.** That is, you cannot do something like:\n\n   `<SeeThrough>Some text on your page</SeeThrough>`\n\nInstead, you must have something like\n\n   `<SeeThrough><div>Some text on your page</div></SeeThrough>`"
+              "description": "The element(s) that that you want to be see-through."
             },
             "active": {
               "type": {
@@ -96,6 +91,28 @@
               "description": "A function to call when the see-through component is clicked. This only works when the component is \"active\".\nThe function is passed the following arguments:\n\n   masked - a boolean indicating whether the click was on the masked (black) or unmasked (non-block) area",
               "defaultValue": {
                 "value": "() => {}",
+                "computed": false
+              }
+            },
+            "className": {
+              "type": {
+                "name": "string"
+              },
+              "required": false,
+              "description": "<SeeThrough> creates a <div> wrapper around all the contained elements.\nThis could break layouts that require very particular element hierarchies, like flex containers.\n\"className\" allows you to style that <div> in-case adding it breaks your layout.\n\nThere is currently no way to avoid having the <div> container due to limitations of React refs.",
+              "defaultValue": {
+                "value": "''",
+                "computed": false
+              }
+            },
+            "style": {
+              "type": {
+                "name": "any"
+              },
+              "required": false,
+              "description": "<SeeThrough> creates a <div> wrapper around all the contained elements.\nThis could break layouts that require very particular element hierarchies, like flex containers.\n\"style\" allows you to style that <div> in-case adding it breaks your layout.\n\nThere is currently no way to avoid having the <div> container due to limitations of React refs.",
+              "defaultValue": {
+                "value": "{}",
                 "computed": false
               }
             },

@@ -1,4 +1,4 @@
-const { mergeWith } = require('lodash/fp')
+const { mergeWith } = require('docz-utils')
 const fs = require('fs-extra')
 
 let custom = {}
@@ -27,6 +27,8 @@ const config = {
       resolve: 'gatsby-theme-docz',
       options: {
         themeConfig: {},
+        src: './src',
+        gatsbyRoot: null,
         themesDir: 'src',
         mdxExtensions: ['.md', '.mdx'],
         docgenConfig: {},
@@ -40,14 +42,14 @@ const config = {
         'props-parser': true,
         debug: false,
         native: false,
-        openBrowser: false,
-        o: false,
-        open: false,
-        'open-browser': false,
+        openBrowser: null,
+        o: null,
+        open: null,
+        'open-browser': null,
         root: '/home/andrew/workspace/react-see-through/.docz',
         base: '/react-see-through/',
         source: './',
-        src: './src',
+        'gatsby-root': null,
         files: '**/*.{md,markdown,mdx}',
         public: '/public',
         dest: './docs',
@@ -59,7 +61,7 @@ const config = {
         title: 'react-see-through',
         description: 'Draw attention to the important parts of your website',
         host: 'localhost',
-        port: 3001,
+        port: 3002,
         p: 3000,
         separator: '-',
         paths: {
@@ -71,6 +73,7 @@ const config = {
           app: '/home/andrew/workspace/react-see-through/.docz/app',
           appPackageJson:
             '/home/andrew/workspace/react-see-through/package.json',
+          appTsConfig: '/home/andrew/workspace/react-see-through/tsconfig.json',
           gatsbyConfig:
             '/home/andrew/workspace/react-see-through/gatsby-config.js',
           gatsbyBrowser:
