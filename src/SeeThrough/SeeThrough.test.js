@@ -27,7 +27,14 @@ expect.extend({
   },
 });
 
-function cartesianProduct(variants, result, position, current) {
+/**
+ *
+ * @param {*} variants - an object that maps (property -> array of values)
+ * @param {*} result - an array to store the cartesian product
+ * @param {*} position - the current position in the variants object
+ * @param {*} current - the current combination
+ */
+function cartesianProduct(variants, result, position = 0, current = []) {
   const keys = Object.keys(variants);
 
   if(position === keys.length) {
@@ -42,7 +49,8 @@ function cartesianProduct(variants, result, position, current) {
 }
 
 function getComboName(combo, idx) {
-  return `Combo ${ idx }: ${ JSON.stringify(combo) }`;
+  // It might be helpful later to include the JSON.stringify, but for now it makes the tests very slow
+  return `Combo ${ idx }`;
 }
 
 // Child wrappers
@@ -104,7 +112,7 @@ const variants = {
 };
 
 const propCombos = [];
-cartesianProduct(variants, propCombos, 0, []);
+cartesianProduct(variants, propCombos);
 
 // These tests will go through all significant combinations of different props and check some behavior
 cases(
