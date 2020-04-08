@@ -1,8 +1,9 @@
 /* eslint-disable react/prop-types */
 
 import React, { Component } from 'react';
-import { render, mount } from 'enzyme';
 import SeeThrough from './SeeThrough';
+import { render, mount } from 'enzyme';
+import cases from 'jest-in-case';
 
 const simpleString = 'Some Text';
 
@@ -26,6 +27,24 @@ expect.extend({
   },
 });
 
+function cartesianProduct(variants, result, position, current) {
+  const keys = Object.keys(variants);
+
+  if(position === keys.length) {
+    result.push(Object.assign({}, current));
+    return;
+  }
+
+  const key = keys[position];
+  for(let i = 0; i < variants[key].length; i++) {
+    cartesianProduct(variants, result, position + 1, Object.assign({ [key]: variants[key][i] }, current));
+  }
+}
+
+function getComboName(combo, idx) {
+  return `Combo ${ idx }: ${ JSON.stringify(combo) }`;
+}
+
 // Child wrappers
 const FuncNoopWrapper = ({ children }) => children; // NOTE: You can't attach a ref to a functional component so any ref techniques will need to handle that
 const FuncDivWrapper = ({ children }) => <div>{ children }</div>;
@@ -33,69 +52,77 @@ class CompNoopWrapper extends Component { render() { return this.props.children;
 class CompDivWrapper extends Component { render() { return <div>{ this.props.children }</div>; } }
 
 // Tests
-describe('SeeThrough#inactive', () => {
-  it('renders no children without crashing', () => {
-    expect(<SeeThrough />).toMount();
-  });
+const variants = {
+  active: [true, false, undefined],
+  onClick: [undefined, () => {}],
+  className: [undefined, 'ReactSeeThrough-test-class'],
+  style: [undefined, {}],
+  maskColor: [undefined, '#000', 'black', 'rgba(0, 0, 0, 0.4)'],
+  childSearchDepth: [0, 1, 2, Number.POSITIVE_INFINITY],
+  children: [
+    // no children
+    undefined,
 
-  it('renders some null children without crashing', () => {
-    expect(
-      <SeeThrough>
-        <FuncDivWrapper>{ simpleString }</FuncDivWrapper>
-        { null }
-        <FuncDivWrapper>{ simpleString }</FuncDivWrapper>
-        <FuncNoopWrapper>{ simpleString }</FuncNoopWrapper>
-      </SeeThrough>
-    ).toMount();
-  });
+    // one null child
+    null,
 
-  it('renders a FuncNoopWrapper child without crashing', () => {
-    expect(
-      <SeeThrough>
-        <FuncNoopWrapper>
-          { simpleString }
-        </FuncNoopWrapper>
-      </SeeThrough>
-    ).toMount();
-  });
+    // many null children
+    <>
+      { null }
+      { null }
+    </>,
 
-  it('renders a FuncDivWrapper child without crashing', () => {
-    expect(
-      <SeeThrough>
-        <FuncDivWrapper>
-          { simpleString }
-        </FuncDivWrapper>
-      </SeeThrough>
-    ).toMount();
-  });
+    // some null children
+    <>
+      <FuncDivWrapper>{ simpleString }</FuncDivWrapper>
+      { null }
+      <FuncDivWrapper>{ simpleString }</FuncDivWrapper>
+      <FuncNoopWrapper>{ simpleString }</FuncNoopWrapper>
+      { null }
+    </>,
 
-  it('renders a CompNoopWrapper child without crashing', () => {
-    expect(
-      <SeeThrough>
-        <CompNoopWrapper>
-          { simpleString }
-        </CompNoopWrapper>
-      </SeeThrough>
-    ).toMount();
-  });
+    // simple FuncNoopWrapper
+    <FuncNoopWrapper>
+      { simpleString }
+    </FuncNoopWrapper>,
 
-  it('renders a CompDivWrapper child without crashing', () => {
-    expect(
-      <SeeThrough>
-        <CompDivWrapper>
-          { simpleString }
-        </CompDivWrapper>
-      </SeeThrough>
-    ).toMount();
-  });
+    // simple FuncDivWrapper
+    <FuncDivWrapper>
+      { simpleString }
+    </FuncDivWrapper>,
 
-  it('should render the children', () => {
-    expect(<SeeThrough active><div>{ simpleString }</div></SeeThrough>).toRenderAndContain(simpleString);
-  });
-});
+    // CompNoopWrapper
+    <CompNoopWrapper>
+      { simpleString }
+    </CompNoopWrapper>,
 
-describe('SeeThrough#active', () => {
-  it('should render the children', () => {
-    expect(<SeeThrough active><div>{ simpleString }</div></SeeThrough>).toRenderAndContain(simpleString);
-  });
-});
+    // CompDivWrapper
+    <CompDivWrapper>
+      { simpleString }
+    </CompDivWrapper>,
+  ],
+};
+
+const propCombos = [];
+cartesianProduct(variants, propCombos, 0, []);
+
+// These tests will go through all significant combinations of different props and check some behavior
+cases(
+  'SeeThrough#inactive-variants-dont-crash',
+  props => expect(<SeeThrough { ...props }>{ props.children }</SeeThrough>).toMount(),
+
+  propCombos
+    .filter(combo => !combo.active) // js-dom doesn't support HTMLCanvas, which "active" requires
+    .map((combo, idx) => Object.assign({ name: getComboName(combo, idx) }, combo)),
+);
+
+cases(
+  'SeeThrough#variants-render-children',
+  props => expect(<SeeThrough { ...props }>{ props.children }</SeeThrough>).toRenderAndContain(simpleString),
+
+  propCombos.map((combo, idx) => Object.assign(
+    { name: getComboName(combo, idx) },
+    combo,
+    { children: <div>{ simpleString }</div> }
+  )),
+);

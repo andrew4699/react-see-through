@@ -21,7 +21,6 @@ or
 ### [GitHub](https://github.com/andrew4699/react-see-through)
 
 ## Future Plans
-* End-to-end testing with Puppeteer
 * See-through multiple elements at once
 * Allow interacting (click, hover, etc...) with the unmasked area
 * Fade-out animation

@@ -61,7 +61,8 @@ describe('SeeThrough#childSearchDepth#boxes', () => {
   });
 
   it('should account for all boxes for depth > 0', () => {
-    // Cypress fun. To do multiple expectBounds in one test you have to use this syntax.
+    // Cypress fun. expectBounds is async (with special CypressPromises) so to have multiple
+    // expectBounds in one test, we have to write our test this way.
     cy.wrap(null)
       .then(() => expectBounds(boxes(1), { x: 0, y: 0, width: 20, height: 60 }))
       .then(() => expectBounds(boxes(2), { x: 0, y: 0, width: 20, height: 60 }))
@@ -69,7 +70,8 @@ describe('SeeThrough#childSearchDepth#boxes', () => {
   });
 
   it('should handle depths that are larger than the actual depth', () => {
-    expectBounds(boxes(1), { x: 0, y: 0, width: 20, height: 60 })
+    cy.wrap(null)
+      .then(() => expectBounds(boxes(1), { x: 0, y: 0, width: 20, height: 60 }))
       .then(() => expectBounds(boxes(1e6), { x: 0, y: 0, width: 20, height: 60 }));
   });
 });
