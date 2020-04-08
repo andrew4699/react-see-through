@@ -13,10 +13,25 @@ import * as ReactDOM from 'react-dom';
 window.ReactDOM = ReactDOM;
 
 // Helpers
-function expectBounds(element, expectedBounds) {
-  cy.mount(<CompNoopWrapper>{ element }</CompNoopWrapper>);
+beforeEach(() => {
+  // Mount something in the beginning so that expectBounds can use .render
+  // Using .render lets us expectBounds multiple times in one test
 
-  cy.get(CompNoopWrapper).then(tree => {
+  const style = `
+    body {
+      margin: 0;
+    }
+  `;
+
+  cy.mount(<CompNoopWrapper>TEMPORARY ELEMENT</CompNoopWrapper>, { style });
+  return cy.get(CompNoopWrapper);
+});
+
+function expectBounds(element, expectedBounds) {
+  // Overrides the previous render
+  cy.render(<CompNoopWrapper>{ element }</CompNoopWrapper>);
+
+  return cy.get(CompNoopWrapper).then(tree => {
     const partialMask = ReactTestUtils.findRenderedComponentWithType(tree, NoopClassWrapper);
     const bounds = partialMask.props.exclude[0];
     expect(bounds).to.deep.equal(expectedBounds);
@@ -24,11 +39,7 @@ function expectBounds(element, expectedBounds) {
 }
 
 function box(width, height) {
-  const style = {
-    width: `${width}px`,
-    height: `${height}px`,
-  };
-  return <div style={ style } />;
+  return <div style={{ width, height }} />;
 }
 
 class CompNoopWrapper extends Component { render() { return this.props.children; } }
@@ -38,7 +49,7 @@ describe('SeeThrough#childSearchDepth#boxes', () => {
   const boxes = childSearchDepth => (
     <SeeThrough childSearchDepth={ childSearchDepth } active>
       { box(20, 20) }
-      <div>
+      <div style={{ display: 'inline-block' }}>
         { box(20, 20) }
       </div>
       { box(20, 20) }
@@ -50,14 +61,16 @@ describe('SeeThrough#childSearchDepth#boxes', () => {
   });
 
   it('should account for all boxes for depth > 0', () => {
-    expectBounds(boxes(1), { x: 0, y: 0, width: 20, height: 60 });
-    expectBounds(boxes(2), { x: 0, y: 0, width: 20, height: 60 });
-    expectBounds(boxes(3), { x: 0, y: 0, width: 20, height: 60 });
+    // Cypress fun. To do multiple expectBounds in one test you have to use this syntax.
+    cy.wrap(null)
+      .then(() => expectBounds(boxes(1), { x: 0, y: 0, width: 20, height: 60 }))
+      .then(() => expectBounds(boxes(2), { x: 0, y: 0, width: 20, height: 60 }))
+      .then(() => expectBounds(boxes(3), { x: 0, y: 0, width: 20, height: 60 }));
   });
 
   it('should handle depths that are larger than the actual depth', () => {
-    expectBounds(boxes(1), { x: 0, y: 0, width: 20, height: 60 });
-    expectBounds(boxes(1e6), { x: 0, y: 0, width: 20, height: 60 });
+    expectBounds(boxes(1), { x: 0, y: 0, width: 20, height: 60 })
+      .then(() => expectBounds(boxes(1e6), { x: 0, y: 0, width: 20, height: 60 }));
   });
 });
 
@@ -65,9 +78,9 @@ describe('SeeThrough#childSearchDepth#absoluteBoxes', () => {
   const boxes = childSearchDepth => (
     <SeeThrough childSearchDepth={ childSearchDepth } active>
       { box(20, 20) }
-      <div>
-        <div style={{ position: 'absolute' }}>
-          <div style={{ position: 'fixed' }}>
+      <div style={{ display: 'inline-block' }}>
+        <div style={{ position: 'absolute', top: 0, left: 0 }}>
+          <div style={{ position: 'fixed', top: 0, left: 0 }}>
             { box(300, 200) }
           </div>
 

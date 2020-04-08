@@ -52,7 +52,8 @@ export default function PartialMask({ exclude, maskColor, onClick }) {
     onClick(masked);
   }, [canvas, exclude, onClick]);
 
-  // Create a container to use this mask
+  // Create a container for the canvas. The reason we want a container as a child on the body
+  // is because we want the canvas to have absolute positioning relative to the entire document.
   const container = useContainer();
   if(!container) {
     return null;

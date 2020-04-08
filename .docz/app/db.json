@@ -152,7 +152,7 @@
                 "name": "number"
               },
               "required": false,
-              "description": "SeeThrough searches children in the DOM tree to determine the area to reveal. Suppose your DOM looks like this:\n\n   SeeThrough -> A -> B -> C -> D\n\nA depth of 3 means that the revealed area will be max_area(A, B, C).\n\nNormally a depth of 1 is enough because parents will be as big as their children. However, absolute/fixed\nchildren don't contribute to the parent's size so the depth needs to be large enough so that the search sees them.",
+              "description": "SeeThrough searches children in the DOM tree to determine the area to reveal. Suppose your DOM looks like this:\n\n   SeeThrough -> A -> B -> C -> D\n\nA depth of 3 means that the revealed area will be max_area(A, B, C).\n\nNormally a depth of 1 is enough because parents will be as big as their children. However, absolute/fixed\nchildren don't contribute to the parent's size so the depth needs to be large enough that the search sees them.",
               "defaultValue": {
                 "value": "1",
                 "computed": false

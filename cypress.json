@@ -1,4 +1,5 @@
 {
   "integrationFolder": "src",
-  "testFiles": "**/*.cy-test.*"
+  "testFiles": "**/*.cy-test.*",
+  "fixturesFolder": false
 }
