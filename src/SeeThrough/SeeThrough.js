@@ -41,9 +41,9 @@ function getMinimalCoveringRect(rects) {
 
   // Figure out the min/max coordinates of all the rectangles
   let minX = Number.POSITIVE_INFINITY,
-      minY = Number.POSITIVE_INFINITY,
-      maxX = Number.NEGATIVE_INFINITY,
-      maxY = Number.NEGATIVE_INFINITY;
+    minY = Number.POSITIVE_INFINITY,
+    maxX = Number.NEGATIVE_INFINITY,
+    maxY = Number.NEGATIVE_INFINITY;
 
   for(const { x, y, width, height } of rects) {
     minX = Math.min(minX, x);
@@ -66,7 +66,7 @@ function getMinimalCoveringRect(rects) {
  * @param {number} depth - The number of levels down from the root to search.
  *                         A depth of 0 returns nothing.
  *                         A depth of 1 returns the direct children of the root. And so on.
- * @param {Array} children - An array to store all children elements of the root up to the
+ * @param {Array} children - An array to store all non-text children elements of the root up to the
  *                           specified depth, not including the root
  */
 function findChildren(root, depth, children) {
@@ -74,7 +74,7 @@ function findChildren(root, depth, children) {
     return;
   }
 
-  for(const child of root.childNodes) {
+  for(const child of root.children) {
     children.push(child);
     findChildren(child, depth - 1, children); // Stack depth is linear in depth, which shouldn't be very high
   }

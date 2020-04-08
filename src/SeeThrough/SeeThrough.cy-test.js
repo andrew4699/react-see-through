@@ -5,7 +5,7 @@
 import React, { Component } from 'react';
 import SeeThrough from './SeeThrough';
 import NoopClassWrapper from './NoopClassWrapper';
-import ReactTestUtils from 'react-dom/test-utils'; // ES6
+import ReactTestUtils from 'react-dom/test-utils';
 import 'cypress-react-unit-test';
 
 // From https://github.com/bahmutov/cypress-react-unit-test/issues/51
@@ -39,7 +39,14 @@ function expectBounds(element, expectedBounds) {
 }
 
 function box(width, height) {
-  return <div style={{ width, height }} />;
+  const style = {
+    width,
+    height,
+    overflow: 'hidden', // Allow boxes smaller than the single character we put in the box
+  };
+
+  // Text is intentionally included to make sure that SeeThrough handles text nodes correctly
+  return <div style={ style }>t</div>;
 }
 
 class CompNoopWrapper extends Component { render() { return this.props.children; } }

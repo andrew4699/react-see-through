@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+/* eslint-disable react/jsx-key */
 
 import React, { Component } from 'react';
 import SeeThrough from './SeeThrough';
