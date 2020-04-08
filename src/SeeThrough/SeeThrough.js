@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import PartialMask from './PartialMask';
 import { withResizeDetector } from 'react-resize-detector';
+import NoopClassWrapper from './NoopClassWrapper';
 
 /**
  * getBoundingClientRect returns a rectangle relative to the viewport.
@@ -57,7 +58,7 @@ function useWindowResizeCount() {
   return windowResizeCount;
 }
 
-function SeeThrough({ children, active, onClick, maskColor, className, style }) {
+function SeeThrough({ children, active, onClick, maskColor, className, style, childSearchDepth }) {
   // We want to update the bounds when the window is resized
   useWindowResizeCount();
 
@@ -71,9 +72,25 @@ function SeeThrough({ children, active, onClick, maskColor, className, style }) 
   }
 
   return (
-    <div ref={ setWrapper } className={ className } style={ style }>
-      { children }
-      { active && <PartialMask exclude={ [bounds] } onClick={ onClick } maskColor={ maskColor } /> }
+    <div>
+      <div
+        key='wrapper'
+        ref={ setWrapper }
+        className={ className }
+        style={ style }
+      >
+        { children }
+      </div>
+
+      { active && (
+        <NoopClassWrapper
+          component={ PartialMask }
+          key='mask'
+          exclude={ [bounds] }
+          onClick={ onClick }
+          maskColor={ maskColor }
+        />
+      ) }
     </div>
   );
 }
@@ -121,6 +138,18 @@ SeeThrough.propTypes = {
    * Supports all canvas fillStyle formats, e.g. "#AAA333", "red", "rgba(10, 12, 8, 0.2)", ...
    */
   maskColor: PropTypes.string,
+
+  /**
+   * SeeThrough searches children in the DOM tree to determine the area to reveal. Suppose your DOM looks like this:
+   *
+   *    SeeThrough -> A -> B -> C -> D
+   *
+   * A depth of 3 means that the revealed area will be max_area(A, B, C).
+   *
+   * Normally a depth of 1 is enough because parents will be as big as their children. However, absolute/fixed
+   * children don't contribute to the parent's size so the depth needs to be large enough so that the search sees them.
+   */
+  childSearchDepth: PropTypes.number,
 };
 
 SeeThrough.defaultProps = {
@@ -129,8 +158,10 @@ SeeThrough.defaultProps = {
   className: '',
   style: {},
   maskColor: 'rgba(0, 0, 0, 0.4)',
+  childSearchDepth: 1,
 };
 
 // withResizeDetector re-renders the component when its width/height change
 // and it injects "width" and "height" props, but we don't use those
-export default withResizeDetector(SeeThrough);
+// export default withResizeDetector(SeeThrough);
+export default SeeThrough;

@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
-import './PartialMask.style.scss';
 
 /**
  * Manages an empty <div> as a child of the document body.
@@ -55,6 +54,7 @@ export default function PartialMask({ exclude, maskColor, onClick }) {
 
   // Create a container to use this mask
   const container = useContainer();
+  console.log('conatiner', container);
   if(!container) {
     return null;
   }
@@ -64,7 +64,12 @@ export default function PartialMask({ exclude, maskColor, onClick }) {
       ref={ setCanvas }
       width={ document.documentElement.scrollWidth }
       height={ document.documentElement.scrollHeight }
-      className='ReactSeeThrough-mask'
+      style={{
+        position: 'absolute',
+        top: 0,
+        left: 0,
+        zIndex: 2000000000, // 2 billion
+      }}
       onClick={ onClickCanvas }
     />,
     container

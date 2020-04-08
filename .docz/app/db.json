@@ -3,7 +3,7 @@
     "title": "react-see-through",
     "description": "Draw attention to the important parts of your website",
     "menu": [],
-    "version": "0.1.4",
+    "version": "0.2.0",
     "repository": "https://github.com/andrew4699/react-see-through",
     "native": false,
     "themeConfig": {},
@@ -56,6 +56,26 @@
     }
   ],
   "props": [
+    {
+      "key": "src/SeeThrough/NoopClassWrapper.js",
+      "value": [
+        {
+          "description": "",
+          "displayName": "NoopClassWrapper",
+          "methods": [],
+          "actualName": "NoopClassWrapper",
+          "props": {
+            "component": {
+              "type": {
+                "name": "any"
+              },
+              "required": true,
+              "description": "The type of component to render with the given props."
+            }
+          }
+        }
+      ]
+    },
     {
       "key": "src/SeeThrough/SeeThrough.js",
       "value": [
@@ -124,6 +144,17 @@
               "description": "The color of the mask.\nSupports all canvas fillStyle formats, e.g. \"#AAA333\", \"red\", \"rgba(10, 12, 8, 0.2)\", ...",
               "defaultValue": {
                 "value": "'rgba(0, 0, 0, 0.4)'",
+                "computed": false
+              }
+            },
+            "childSearchDepth": {
+              "type": {
+                "name": "number"
+              },
+              "required": false,
+              "description": "SeeThrough searches children in the DOM tree to determine the area to reveal. Suppose your DOM looks like this:\n\n   SeeThrough -> A -> B -> C -> D\n\nA depth of 3 means that the revealed area will be max_area(A, B, C).\n\nNormally a depth of 1 is enough because parents will be as big as their children. However, absolute/fixed\nchildren don't contribute to the parent's size so the depth needs to be large enough so that the search sees them.",
+              "defaultValue": {
+                "value": "1",
                 "computed": false
               }
             }

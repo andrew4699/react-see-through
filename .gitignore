@@ -5,6 +5,10 @@ coverage
 
 .idea
 
+# Cypress
+cypress/videos
+cypress/screenshots
+
 # lock files
 package-lock.json
 yarn.lock
