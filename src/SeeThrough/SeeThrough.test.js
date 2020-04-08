@@ -49,7 +49,7 @@ describe('SeeThrough#inactive', () => {
     ).toMount();
   });
 
-  it('renders without crashing with a FuncNoopWrapper child', () => {
+  it('renders a FuncNoopWrapper child without crashing', () => {
     expect(
       <SeeThrough>
         <FuncNoopWrapper>
@@ -59,7 +59,7 @@ describe('SeeThrough#inactive', () => {
     ).toMount();
   });
 
-  it('renders without crashing with a FuncDivWrapper child', () => {
+  it('renders a FuncDivWrapper child without crashing', () => {
     expect(
       <SeeThrough>
         <FuncDivWrapper>
@@ -69,7 +69,7 @@ describe('SeeThrough#inactive', () => {
     ).toMount();
   });
 
-  it('renders without crashing with a CompNoopWrapper child', () => {
+  it('renders a CompNoopWrapper child without crashing', () => {
     expect(
       <SeeThrough>
         <CompNoopWrapper>
@@ -79,7 +79,7 @@ describe('SeeThrough#inactive', () => {
     ).toMount();
   });
 
-  it('renders without crashing with a CompDivWrapper child', () => {
+  it('renders a CompDivWrapper child without crashing', () => {
     expect(
       <SeeThrough>
         <CompDivWrapper>
