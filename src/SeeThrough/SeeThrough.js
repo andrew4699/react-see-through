@@ -72,7 +72,7 @@ function SeeThrough({ children, active, onClick, maskColor, className, style, ch
   }
 
   return (
-    <div>
+    <>
       <div
         key='wrapper'
         ref={ setWrapper }
@@ -91,7 +91,7 @@ function SeeThrough({ children, active, onClick, maskColor, className, style, ch
           maskColor={ maskColor }
         />
       ) }
-    </div>
+    </>
   );
 }
 
@@ -163,5 +163,4 @@ SeeThrough.defaultProps = {
 
 // withResizeDetector re-renders the component when its width/height change
 // and it injects "width" and "height" props, but we don't use those
-// export default withResizeDetector(SeeThrough);
-export default SeeThrough;
+export default withResizeDetector(SeeThrough);

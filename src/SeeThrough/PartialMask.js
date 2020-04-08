@@ -54,7 +54,6 @@ export default function PartialMask({ exclude, maskColor, onClick }) {
 
   // Create a container to use this mask
   const container = useContainer();
-  console.log('conatiner', container);
   if(!container) {
     return null;
   }

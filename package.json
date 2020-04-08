@@ -32,7 +32,7 @@
     "cypress": "cypress run",
     "lint": "eslint ./src",
     "prepublishOnly": "yarn clean && yarn test && yarn build",
-    "test": "yarn lint && yarn coverage",
+    "test": "yarn lint && yarn coverage && yarn cypress",
     "docz:dev": "docz dev",
     "docz:build": "docz build"
   },

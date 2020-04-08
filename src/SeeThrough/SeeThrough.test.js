@@ -1,11 +1,8 @@
-/// <reference types="cypress" />
-
 /* eslint-disable react/prop-types */
 
 import React, { Component } from 'react';
-import { shallow, render, mount } from 'enzyme';
+import { render, mount } from 'enzyme';
 import SeeThrough from './SeeThrough';
-import 'cypress-react-unit-test';
 
 const simpleString = 'Some Text';
 
@@ -27,29 +24,7 @@ expect.extend({
 
     return { pass: true, message: () => '' };
   },
-  toHaveBounds(element, expectedBounds) {
-    // const actualBounds =
-    //   shallow(element) // <SeeThrough>
-    //   .shallow() // <ResizeDetector>
-    //   .shallow() // <ChildWrapper>
-    //   .shallow() // <Fragment>
-    //   .childAt(1) // <PartialMask>
-    //   .props().exclude[0];
-    // .find('PartialMask')
-
-    const actualBounds = cy.mount(element);
-    console.log('act bounds', actualBounds);
-    return { pass: true, message: () => '' };
-  },
 });
-
-function box(width, height) {
-  const style = {
-    width: `${width}px`,
-    height: `${height}px`,
-  };
-  return <div style={ style } />;
-}
 
 // Child wrappers
 const FuncNoopWrapper = ({ children }) => children; // NOTE: You can't attach a ref to a functional component so any ref techniques will need to handle that
@@ -123,22 +98,4 @@ describe('SeeThrough#active', () => {
   it('should render the children', () => {
     expect(<SeeThrough active><div>{ simpleString }</div></SeeThrough>).toRenderAndContain(simpleString);
   });
-});
-
-describe('SeeThrough#childSearchDepth', () => {
-  const simpleBoxes = childSearchDepth => (
-    <SeeThrough childSearchDepth={ childSearchDepth } active>
-      { box(20, 20) }
-      <div>
-        { box(20, 20) }
-      </div>
-      { box(20, 20) }
-    </SeeThrough>
-  );
-
-  it('should compute an empty rectangle for depth = 0', () => {
-    expect(simpleBoxes(0)).toHaveBounds({ x: 0, y: 0, width: 0, height: 0 });
-  });
-
-  // TODO: other tests with actual rendering
 });
