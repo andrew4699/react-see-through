@@ -61,7 +61,7 @@ const config = {
         title: 'react-see-through',
         description: 'Draw attention to the important parts of your website',
         host: 'localhost',
-        port: 3000,
+        port: 3002,
         p: 3000,
         separator: '-',
         paths: {

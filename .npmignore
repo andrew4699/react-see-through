@@ -13,18 +13,16 @@ node_modules
 package-lock.json
 yarn.lock
 
-# Cypress
-cypress/videos
-cypress/screenshots
-
 # project files
 .docz
 config
+cypress
 src
 test
 docs
 CHANGELOG.md
 example.png
+cypress.json
 doczrc.js
 gatsby-config.js
 jest.config.js

@@ -3,7 +3,7 @@
     "title": "react-see-through",
     "description": "Draw attention to the important parts of your website",
     "menu": [],
-    "version": "0.2.0",
+    "version": "0.4.0",
     "repository": "https://github.com/andrew4699/react-see-through",
     "native": false,
     "themeConfig": {},
@@ -155,6 +155,20 @@
               "description": "SeeThrough searches children in the DOM tree to determine the area to reveal. Suppose your DOM looks like this:\n\n   SeeThrough -> A -> B -> C -> D\n\nA depth of 3 means that the revealed area will be max_area(A, B, C).\n\nNormally a depth of 1 is enough because parents will be as big as their children. However, absolute/fixed\nchildren don't contribute to the parent's size so the depth needs to be large enough that the search sees them.",
               "defaultValue": {
                 "value": "1",
+                "computed": false
+              }
+            },
+            "childTagsToSkip": {
+              "type": {
+                "name": "arrayOf",
+                "value": {
+                  "name": "string"
+                }
+              },
+              "required": false,
+              "description": "SeeThrough searches children in the DOM tree to determine the area to reveal (more details under \"childSearchDepth\").\nThis is a list of element tags that won't be traversed further down. Note that the tags themselves will still be considered.",
+              "defaultValue": {
+                "value": "['svg']",
                 "computed": false
               }
             }

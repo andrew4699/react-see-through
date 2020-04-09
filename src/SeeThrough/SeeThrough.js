@@ -4,8 +4,6 @@ import PartialMask from './PartialMask';
 import { withResizeDetector } from 'react-resize-detector';
 import NoopClassWrapper from './NoopClassWrapper';
 
-const emptyRect = { x: 0, y: 0, width: 0, height: 0 };
-
 /**
  * getBoundingClientRect returns a rectangle relative to the viewport.
  * Modified from https://stackoverflow.com/a/1480137
@@ -13,52 +11,26 @@ const emptyRect = { x: 0, y: 0, width: 0, height: 0 };
  * @returns a bounding rectangle relative to the top left of the document.
  */
 function getAbsoluteBoundingRect(element) {
-  // Width and height should not change based on bounds relativity
+  const rect = element.getBoundingClientRect();
+
+  // Width and height shouldn't change based on bounds relativity
   // so it's fine to use getBoundingClientRect for this
-  const relativeRect = element.getBoundingClientRect();
-  const width = relativeRect.right - relativeRect.left;
-  const height = relativeRect.bottom - relativeRect.top;
+  const width = rect.right - rect.left;
+  const height = rect.bottom - rect.top;
 
-  // Traverse up the tree from this element, adding all relative positions together
-  let x = 0, y = 0;
-  do {
-    x += element.offsetLeft || 0;
-    y += element.offsetTop || 0;
-    element = element.offsetParent;
-  } while(element);
-
-  return { x, y, width, height };
+  return {
+    x: rect.x + document.documentElement.scrollLeft,
+    y: rect.y + document.documentElement.scrollTop,
+    width,
+    height,
+  };
 }
 
 /**
- * @returns the minimal rectangle that covers all the given rectangles.
- *          If "rects" is empty, returns an empty rectangle at position (0, 0).
+ * @returns the lowercase tag name of this element
  */
-function getMinimalCoveringRect(rects) {
-  if(rects.length === 0) {
-    return emptyRect;
-  }
-
-  // Figure out the min/max coordinates of all the rectangles
-  let minX = Number.POSITIVE_INFINITY,
-    minY = Number.POSITIVE_INFINITY,
-    maxX = Number.NEGATIVE_INFINITY,
-    maxY = Number.NEGATIVE_INFINITY;
-
-  for(const { x, y, width, height } of rects) {
-    minX = Math.min(minX, x);
-    minY = Math.min(minY, y);
-    maxX = Math.max(maxX, x + width);
-    maxY = Math.max(maxY, y + height);
-  }
-
-  // Compute the rectangle from the min/max coordinates
-  return {
-    x: minX,
-    y: minY,
-    width: maxX - minX,
-    height: maxY - minY,
-  };
+function getTagName(element) {
+  return element.tagName.toLowerCase();
 }
 
 /**
@@ -66,17 +38,22 @@ function getMinimalCoveringRect(rects) {
  * @param {number} depth - The number of levels down from the root to search.
  *                         A depth of 0 returns nothing.
  *                         A depth of 1 returns the direct children of the root. And so on.
- * @param {Array} children - An array to store all non-text children elements of the root up to the
- *                           specified depth, not including the root
+ * @param {Array} children - An array to store all non-text/svg children elements of the root
+ *                           up to the specified depth, not including the root
  */
-function findChildren(root, depth, children) {
+function findChildren(root, depth, childTagsToSkip, children) {
   if(depth === 0) {
     return;
   }
 
   for(const child of root.children) {
     children.push(child);
-    findChildren(child, depth - 1, children); // Stack depth is linear in depth, which shouldn't be very high
+
+    if(childTagsToSkip.includes(getTagName(child))) {
+      continue;
+    }
+
+    findChildren(child, depth - 1, childTagsToSkip, children); // Stack depth is linear in depth, which shouldn't be very high
   }
 }
 
@@ -108,7 +85,7 @@ function useWindowResizeCount() {
   return windowResizeCount;
 }
 
-function SeeThrough({ children, active, onClick, maskColor, className, style, childSearchDepth }) {
+function SeeThrough({ children, active, onClick, maskColor, className, style, childSearchDepth, childTagsToSkip }) {
   // We want to update the bounds when the window is resized
   useWindowResizeCount();
 
@@ -116,14 +93,15 @@ function SeeThrough({ children, active, onClick, maskColor, className, style, ch
   const [wrapper, setWrapper] = useState(null);
 
   // Figure out which area we want to mask
+  // const [bounds, setBounds] = useState([]);
   const bounds = useMemo(() => {
     if(!active || !wrapper) {
-      return emptyRect;
+      return [];
     }
 
     const childNodes = [];
-    findChildren(wrapper, childSearchDepth, childNodes);
-    return getMinimalCoveringRect(childNodes.map(getAbsoluteBoundingRect));
+    findChildren(wrapper, childSearchDepth, childTagsToSkip, childNodes);
+    return childNodes.map(getAbsoluteBoundingRect);
   }, [wrapper, active, children, childSearchDepth]);
 
   return (
@@ -141,7 +119,7 @@ function SeeThrough({ children, active, onClick, maskColor, className, style, ch
         <NoopClassWrapper
           component={ PartialMask }
           key='mask'
-          exclude={ [bounds] }
+          exclude={ bounds }
           onClick={ onClick }
           maskColor={ maskColor }
         />
@@ -205,6 +183,12 @@ SeeThrough.propTypes = {
    * children don't contribute to the parent's size so the depth needs to be large enough that the search sees them.
    */
   childSearchDepth: PropTypes.number,
+
+  /**
+   * SeeThrough searches children in the DOM tree to determine the area to reveal (more details under "childSearchDepth").
+   * This is a list of element tags that won't be traversed further down. Note that the tags themselves will still be considered.
+   */
+  childTagsToSkip: PropTypes.arrayOf(PropTypes.string),
 };
 
 SeeThrough.defaultProps = {
@@ -214,6 +198,7 @@ SeeThrough.defaultProps = {
   style: {},
   maskColor: 'rgba(0, 0, 0, 0.4)',
   childSearchDepth: 1,
+  childTagsToSkip: ['svg'], // Children inside an SVG could have a lot of overflow. Lets skip them as a precaution.
 };
 
 // withResizeDetector re-renders the component when its width/height change

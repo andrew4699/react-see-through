@@ -1,6 +1,6 @@
 {
   "name": "react-see-through",
-  "version": "0.3.5",
+  "version": "0.4.0",
   "description": "Draw attention to the important parts of your website",
   "keywords": [
     "react",
@@ -31,7 +31,7 @@
     "coverage": "jest --coverage",
     "cypress": "cypress run",
     "lint": "eslint ./src",
-    "prepublishOnly": "yarn build",
+    "prepublishOnly": "yarn clean && yarn test && yarn build",
     "test": "yarn lint && yarn coverage && yarn cypress",
     "docz:dev": "docz dev",
     "docz:build": "docz build"
