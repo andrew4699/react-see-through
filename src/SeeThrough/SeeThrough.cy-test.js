@@ -235,7 +235,7 @@ describe('SeeThrough#childSearchDepth#absoluteBoxes', () => {
 describe('SeeThrough#childSearchDepth#edgeElements', () => {
   it('should ignore the size of SVG children', () => {
     expectBounds(
-      <SeeThrough childSearchDepth={ Number.POSITIVE_INFINITY } active>
+      <SeeThrough childSearchDepth={ Number.POSITIVE_INFINITY } childTagsToSkip={ ['svg'] } active>
         { box(20, 20) }
         <div style={{ display: 'inline-block' }}>
           <svg viewBox='0 0 30 30' width='30' height='30'>
@@ -249,7 +249,7 @@ describe('SeeThrough#childSearchDepth#edgeElements', () => {
 
   it('should correctly compute the absolute bounding box for an SVG in an arbitrary position', () => {
     expectBounds(
-      <SeeThrough childSearchDepth={ Number.POSITIVE_INFINITY } active>
+      <SeeThrough childSearchDepth={ Number.POSITIVE_INFINITY } childTagsToSkip={ ['svg'] } active>
         <div style={{ display: 'inline-block', marginTop: 500, marginLeft: 500 }}>
           <svg viewBox='0 0 30 30' width='30' height='30'>
             <circle cx='5000' cy='5000' r='5000' />

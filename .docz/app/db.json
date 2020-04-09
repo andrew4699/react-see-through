@@ -3,7 +3,7 @@
     "title": "react-see-through",
     "description": "Draw attention to the important parts of your website",
     "menu": [],
-    "version": "0.4.0",
+    "version": "0.5.0",
     "repository": "https://github.com/andrew4699/react-see-through",
     "native": false,
     "themeConfig": {},
@@ -50,6 +50,21 @@
             "slug": "clicking-on-the-masked-black-area-stops-the-see-through-effect",
             "depth": 3,
             "value": "Clicking on the masked (black) area stops the see-through effect."
+          },
+          {
+            "slug": "absolutefixed-elements",
+            "depth": 2,
+            "value": "Absolute/fixed elements"
+          },
+          {
+            "slug": "uses-childsearchdepth-to-explicitly-search-more-children-see-the-props-documentation-at-the-top-for-more-info",
+            "depth": 3,
+            "value": "Uses childSearchDepth to explicitly search more children. See the props documentation at the top for more info."
+          },
+          {
+            "slug": "note-if-you-dont-know-what-depth-to-use-just-use-numberpositive_infinity-and-only-lower-it-if-things-get-slow",
+            "depth": 4,
+            "value": "NOTE: If you don't know what depth to use, just use  Number.POSITIVE_INFINITY  and only lower it if things get slow."
           }
         ]
       }
@@ -166,7 +181,7 @@
                 }
               },
               "required": false,
-              "description": "SeeThrough searches children in the DOM tree to determine the area to reveal (more details under \"childSearchDepth\").\nThis is a list of element tags that won't be traversed further down. Note that the tags themselves will still be considered.",
+              "description": "SeeThrough searches children in the DOM tree to determine the area to reveal (more details under \"childSearchDepth\").\nThis is a list of element tags that won't be traversed further down. **Note that the tags themselves will still be considered.**",
               "defaultValue": {
                 "value": "['svg']",
                 "computed": false

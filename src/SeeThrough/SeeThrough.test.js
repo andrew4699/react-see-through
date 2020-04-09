@@ -65,9 +65,10 @@ const variants = {
   active: [true, false, undefined],
   onClick: [undefined, () => {}],
   className: [undefined, 'ReactSeeThrough-test-class'],
-  style: [undefined, {}],
-  maskColor: [undefined, '#000', 'black', 'rgba(0, 0, 0, 0.4)'],
+  style: [undefined, {}, { color: 'red' }],
+  maskColor: [undefined, '#000'],
   childSearchDepth: [0, 1, 2, Number.POSITIVE_INFINITY],
+  childTagsToSkip: [[], ['svg']],
   children: [
     // no children
     undefined,

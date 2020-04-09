@@ -1,5 +1,14 @@
 # react-see-through
 
+## Table of Contents
+* [Draw attention to the important parts of your website](#draw-attention-to-the-important-parts-of-your-website)
+  + [Example](#example)
+* [Installation](#installation)
+* [Importing](#importing)
+* [Use Cases](#use-cases)
+* [Documentation/Examples](#resources)
+* [Future Plans](#future-plans)
+
 ## Draw attention to the important parts of your website
 ### Example
 ![Example](example.png)
@@ -12,7 +21,14 @@ or
 
 `yarn add react-see-through`
 
-## Use cases
+## Importing
+To use the react-see-through component, you want to do:
+
+`import { SeeThrough } from 'react-see-through';` }
+
+after installing.
+
+## Use Cases
 * Slack, Discord, and many other popular services use this type of effect for tutorials
   * This lets them direct users' attention to particular elements being introduced.
 
@@ -22,6 +38,7 @@ or
 
 ## Future Plans
 * See-through multiple elements at once
+* Add an easy way to place things above the mask
 * Allow interacting (click, hover, etc...) with the unmasked area
 * Fade-out animation
 * Better documentation styling

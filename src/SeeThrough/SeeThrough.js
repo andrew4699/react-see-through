@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import PartialMask from './PartialMask';
 import { withResizeDetector } from 'react-resize-detector';
@@ -87,22 +87,22 @@ function useWindowResizeCount() {
 
 function SeeThrough({ children, active, onClick, maskColor, className, style, childSearchDepth, childTagsToSkip }) {
   // We want to update the bounds when the window is resized
-  useWindowResizeCount();
+  const windowResizeCount = useWindowResizeCount();
 
   // Keep track of a ref to the wrapper
   const [wrapper, setWrapper] = useState(null);
 
   // Figure out which area we want to mask
-  // const [bounds, setBounds] = useState([]);
-  const bounds = useMemo(() => {
+  const [bounds, setBounds] = useState([]);
+  useEffect(() => {
     if(!active || !wrapper) {
-      return [];
+      return;
     }
 
     const childNodes = [];
     findChildren(wrapper, childSearchDepth, childTagsToSkip, childNodes);
-    return childNodes.map(getAbsoluteBoundingRect);
-  }, [wrapper, active, children, childSearchDepth]);
+    setBounds(childNodes.map(getAbsoluteBoundingRect));
+  }, [wrapper, active, children, childSearchDepth, windowResizeCount]);
 
   return (
     <>
@@ -186,7 +186,7 @@ SeeThrough.propTypes = {
 
   /**
    * SeeThrough searches children in the DOM tree to determine the area to reveal (more details under "childSearchDepth").
-   * This is a list of element tags that won't be traversed further down. Note that the tags themselves will still be considered.
+   * This is a list of element tags that won't be traversed further down. **Note that the tags themselves will still be considered.**
    */
   childTagsToSkip: PropTypes.arrayOf(PropTypes.string),
 };

@@ -11,7 +11,7 @@ import SeeThrough from './SeeThrough';
 
 ## Props
 
-<Props of={ SeeThrough } />
+<Props of={ SeeThrough } isToggle={ true } />
 
 ## Importing
 To use the react-see-through component, you want to do:
@@ -32,7 +32,31 @@ after installing.
       <div style={{ padding: '60px' }}>
         <button onClick={ () => setActive(true) }>Activate</button>
         <SeeThrough active={ active } onClick={ masked => masked && setActive(false) }>
-          <div>Some text on your website</div>
+          <div>Some text</div>
+          <div>Other text</div>
+        </SeeThrough>
+      </div>
+    );
+  }}
+</Playground>
+
+---
+
+## Absolute/fixed elements
+### Uses childSearchDepth to explicitly search more children. See the props documentation at the top for more info.
+#### NOTE: If you don't know what depth to use, just use `Number.POSITIVE_INFINITY` and only lower it if things get slow.
+
+<Playground>
+  {() => {
+    const [active, setActive] = useState(false);
+    return (
+      <div style={{ padding: '60px' }}>
+        <button onClick={ () => setActive(true) }>Activate</button>
+        <SeeThrough active={ active } onClick={ masked => masked && setActive(false) } childSearchDepth={ 2 }>
+          <div>
+            <div>My cool content</div>
+            <div style={{ position: 'absolute', left: 50 }}>Other absoluteLY cool content</div>
+          </div>
         </SeeThrough>
       </div>
     );
