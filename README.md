@@ -24,7 +24,7 @@ or
 ## Importing
 To use the react-see-through component, you want to do:
 
-`import { SeeThrough } from 'react-see-through';` }
+`import { SeeThrough } from 'react-see-through';`
 
 after installing.
 
