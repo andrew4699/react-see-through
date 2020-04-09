@@ -13,16 +13,13 @@ import NoopClassWrapper from './NoopClassWrapper';
 function getAbsoluteBoundingRect(element) {
   const rect = element.getBoundingClientRect();
 
-  // Width and height shouldn't change based on bounds relativity
-  // so it's fine to use getBoundingClientRect for this
-  const width = rect.right - rect.left;
-  const height = rect.bottom - rect.top;
-
   return {
     x: rect.x + document.documentElement.scrollLeft,
     y: rect.y + document.documentElement.scrollTop,
-    width,
-    height,
+
+    // Width and height shouldn't change based on bounds relativity so they don't need anything special
+    width: rect.right - rect.left,
+    height: rect.bottom - rect.top,
   };
 }
 
@@ -38,7 +35,9 @@ function getTagName(element) {
  * @param {number} depth - The number of levels down from the root to search.
  *                         A depth of 0 returns nothing.
  *                         A depth of 1 returns the direct children of the root. And so on.
- * @param {Array} children - An array to store all non-text/svg children elements of the root
+ * @param {Set} childTagsToSkip - a Set of element tag names to not continue traversing. The elements
+ *                                with the tags themselves will still be considered, but not their children.
+ * @param {Array} children - An array to store all non-text children elements of the root
  *                           up to the specified depth, not including the root
  */
 function findChildren(root, depth, childTagsToSkip, children) {
@@ -49,11 +48,11 @@ function findChildren(root, depth, childTagsToSkip, children) {
   for(const child of root.children) {
     children.push(child);
 
-    if(childTagsToSkip.includes(getTagName(child))) {
+    if(childTagsToSkip.has(getTagName(child))) {
       continue;
     }
 
-    findChildren(child, depth - 1, childTagsToSkip, children); // Stack depth is linear in depth, which shouldn't be very high
+    findChildren(child, depth - 1, childTagsToSkip, children); // Stack depth is linear in "depth", which shouldn't be very high
   }
 }
 
@@ -100,7 +99,7 @@ function SeeThrough({ children, active, onClick, maskColor, className, style, ch
     }
 
     const childNodes = [];
-    findChildren(wrapper, childSearchDepth, childTagsToSkip, childNodes);
+    findChildren(wrapper, childSearchDepth, new Set(childTagsToSkip), childNodes);
     setBounds(childNodes.map(getAbsoluteBoundingRect));
   }, [wrapper, active, children, childSearchDepth, windowResizeCount]);
 
@@ -177,7 +176,7 @@ SeeThrough.propTypes = {
    *
    *    SeeThrough -> A -> B -> C -> D
    *
-   * A depth of 3 means that the revealed area will be max_area(A, B, C).
+   * A depth of 3 means that the revealed areas will be A, B, and C.
    *
    * Normally a depth of 1 is enough because parents will be as big as their children. However, absolute/fixed
    * children don't contribute to the parent's size so the depth needs to be large enough that the search sees them.

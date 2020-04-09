@@ -40,5 +40,8 @@ after installing.
 * See-through multiple elements at once
 * Add an easy way to place things above the mask
 * Allow interacting (click, hover, etc...) with the unmasked area
+  * Make only certain areas interactable?
 * Fade-out animation
+* Option to add padding
+* Support lone text-nodes
 * Better documentation styling
