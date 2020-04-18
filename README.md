@@ -41,13 +41,10 @@ after installing.
 ### [GitHub](https://github.com/andrew4699/react-see-through)
 
 ## Future Plans
-* See-through multiple elements at once
-* Add an easy way to place things above the mask
 * Allow interacting (click, hover, etc...) with the unmasked area
-  * Make only certain areas interactable?
+  * Make only certain areas interactable? - <Interactable> wrapper
 * Typescript definitions
 * Fade-out animation
 * Option to add padding
-* Support lone text-nodes
-  * https://stackoverflow.com/questions/21007722/measure-height-of-text-node
+* Multiple <SeeThrough> instances at once
 * Better documentation styling
