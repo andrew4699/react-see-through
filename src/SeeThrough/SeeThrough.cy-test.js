@@ -20,7 +20,8 @@ beforeEach(() => {
   // Using .render lets us expectBounds multiple times in one test
 
   const style = `
-    body {
+    * {
+      font: normal 12px Arial;
       margin: 0;
     }
   `;
@@ -171,6 +172,14 @@ describe('SeeThrough#active-doesnt-crash', () => {
       </SeeThrough>
     );
   });
+
+  it('handles lone text', () => {
+    expectNoCrash(
+      <SeeThrough active childSearchDepth={ Number.POSITIVE_INFINITY }>
+        { simpleString }
+      </SeeThrough>
+    );
+  });
 });
 
 describe('SeeThrough#childSearchDepth#boxes', () => {
@@ -257,6 +266,18 @@ describe('SeeThrough#childSearchDepth#edgeElements', () => {
         </div>
       </SeeThrough>,
       { x: 500, y: 500, width: 30, height: 30 },
+    );
+  });
+});
+
+describe('SeeThrough#childSearchDepth#textNodes', () => {
+  it('should correctly compute the size of text nodes', () => {
+    expectBounds(
+      <SeeThrough childSearchDepth={ Number.POSITIVE_INFINITY } active>
+        { box(5, 5) }
+        This text should be longer than the box
+      </SeeThrough>,
+      { x: 0, y: 0, width: 207, height: 19 },
     );
   });
 });

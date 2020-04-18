@@ -3,6 +3,7 @@
 ## Table of Contents
 * [Draw attention to the important parts of your website](#draw-attention-to-the-important-parts-of-your-website)
   + [Example](#example)
+  + [How is this different from a Modal?](#how-is-this-different-from-a-modal)
 * [Installation](#installation)
 * [Importing](#importing)
 * [Use Cases](#use-cases)
@@ -13,6 +14,9 @@
 ### Example
 ![Example](example.png)
 **\* react-see-through is used here to create the black mask above everything except the tutorial [(source)](https://calsynk.com)**
+
+### How is this different from a Modal?
+The black mask appears around existing elements on the page.
 
 ## Installation
 `npm install --save react-see-through`
@@ -41,7 +45,9 @@ after installing.
 * Add an easy way to place things above the mask
 * Allow interacting (click, hover, etc...) with the unmasked area
   * Make only certain areas interactable?
+* Typescript definitions
 * Fade-out animation
 * Option to add padding
 * Support lone text-nodes
+  * https://stackoverflow.com/questions/21007722/measure-height-of-text-node
 * Better documentation styling

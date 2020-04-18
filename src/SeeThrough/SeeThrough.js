@@ -5,13 +5,47 @@ import { withResizeDetector } from 'react-resize-detector';
 import NoopClassWrapper from './NoopClassWrapper';
 
 /**
- * getBoundingClientRect returns a rectangle relative to the viewport.
- * Modified from https://stackoverflow.com/a/1480137
+ * Gets rid of non-integer values in our rectangles
  *
- * @returns a bounding rectangle relative to the top left of the document.
+ * @returns a rectangle with position/size rounded so as to make the rectangle bigger
+ */
+function biggerRoundedRect(rect) {
+  return {
+    x: Math.floor(rect.x),
+    y: Math.floor(rect.y),
+    width: Math.ceil(rect.width),
+    height: Math.ceil(rect.height),
+  };
+}
+
+/**
+ * Wrapper around element.getBoundingClientRect() that also supports text nodes.
+ *
+ * @returns a rectangle describing the element's position, relative to the viewport
+ */
+function getBoundingClientRect(element) {
+  switch(element.nodeType) {
+    case Node.ELEMENT_NODE: {
+      return element.getBoundingClientRect();
+    }
+
+    case Node.TEXT_NODE: {
+      const range = document.createRange();
+      range.selectNodeContents(element);
+      return range.getBoundingClientRect();
+    }
+
+    default: {
+      throw new Error('Unsupported node type ' + element.nodeType);
+    }
+  }
+}
+
+/**
+ * @returns a bounding rectangle relative to the top left of the document
  */
 function getAbsoluteBoundingRect(element) {
-  const rect = element.getBoundingClientRect();
+  const rect = getBoundingClientRect(element);
 
   return {
     x: rect.x + document.documentElement.scrollLeft,
@@ -37,7 +71,7 @@ function getTagName(element) {
  *                         A depth of 1 returns the direct children of the root. And so on.
  * @param {Set} childTagsToSkip - a Set of element tag names to not continue traversing. The elements
  *                                with the tags themselves will still be considered, but not their children.
- * @param {Array} children - An array to store all non-text children elements of the root
+ * @param {Array} children - An array to store all children elements of the root
  *                           up to the specified depth, not including the root
  */
 function findChildren(root, depth, childTagsToSkip, children) {
@@ -45,10 +79,14 @@ function findChildren(root, depth, childTagsToSkip, children) {
     return;
   }
 
-  for(const child of root.children) {
+  for(const child of root.childNodes) {
+    if(child.nodeType !== Node.TEXT_NODE && child.nodeType !== Node.ELEMENT_NODE) {
+      continue;
+    }
+
     children.push(child);
 
-    if(childTagsToSkip.has(getTagName(child))) {
+    if(child.nodeType === Node.ELEMENT_NODE && childTagsToSkip.has(getTagName(child))) {
       continue;
     }
 
@@ -99,9 +137,9 @@ function SeeThrough({ children, active, onClick, maskColor, className, style, ch
     }
 
     const childNodes = [];
-    findChildren(wrapper, childSearchDepth, new Set(childTagsToSkip), childNodes);
-    setBounds(childNodes.map(getAbsoluteBoundingRect));
-  }, [wrapper, active, children, childSearchDepth, windowResizeCount]);
+    findChildren(wrapper, childSearchDepth, new Set(childTagsToSkip), childNodes); // Could be memoized more tightly
+    setBounds(childNodes.map(getAbsoluteBoundingRect).map(biggerRoundedRect));
+  }, [wrapper, active, children, childSearchDepth, childTagsToSkip, windowResizeCount]);
 
   return (
     <>
@@ -143,7 +181,7 @@ SeeThrough.propTypes = {
    * A function to call when the see-through component is clicked. This only works when the component is "active".
    * The function is passed the following arguments:
    *
-   *    masked - a boolean indicating whether the click was on the masked (black) or unmasked (non-block) area
+   *    masked - a boolean indicating whether the click was on the masked (black) or unmasked (non-black) area
    */
   onClick: PropTypes.func,
 

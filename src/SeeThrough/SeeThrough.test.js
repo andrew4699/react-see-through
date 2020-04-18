@@ -110,6 +110,9 @@ const variants = {
     <CompDivWrapper>
       { simpleString }
     </CompDivWrapper>,
+
+    // Text children
+    simpleString,
   ],
 };
 
