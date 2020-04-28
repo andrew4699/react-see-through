@@ -4,4 +4,5 @@ module.exports = {
   dest: './docs',
   title: 'react-see-through',
   description: 'Draw attention to the important parts of your website',
+  public: './',
 };

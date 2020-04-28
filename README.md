@@ -46,5 +46,4 @@ after installing.
 * Typescript definitions
 * Fade-out animation
 * Option to add padding
-* Multiple <SeeThrough> instances at once
 * Better documentation styling

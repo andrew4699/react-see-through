@@ -1,2 +1,3 @@
-import SeeThrough from './SeeThrough/SeeThrough';
-export default { SeeThrough };
+import SeeThrough from './SeeThrough';
+import SeeThroughController from './SeeThroughController';
+export default { SeeThrough, SeeThroughController };

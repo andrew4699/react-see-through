@@ -51,7 +51,7 @@ const config = {
         source: './',
         'gatsby-root': null,
         files: '**/*.{md,markdown,mdx}',
-        public: '/public',
+        public: './',
         dest: './docs',
         d: '.docz/dist',
         editBranch: 'master',
@@ -61,7 +61,7 @@ const config = {
         title: 'react-see-through',
         description: 'Draw attention to the important parts of your website',
         host: 'localhost',
-        port: 3000,
+        port: 3001,
         p: 3000,
         separator: '-',
         paths: {

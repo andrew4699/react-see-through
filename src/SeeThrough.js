@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import PartialMask from './PartialMask';
 import { withResizeDetector } from 'react-resize-detector';
 import NoopClassWrapper from './NoopClassWrapper';
+import { useNotify } from './SeeThroughController';
 
 /**
  * Gets rid of non-integer values in our rectangles
@@ -141,6 +142,17 @@ function SeeThrough({ children, active, onClick, maskColor, className, style, ch
     setBounds(childNodes.map(getAbsoluteBoundingRect).map(biggerRoundedRect));
   }, [wrapper, active, children, childSearchDepth, childTagsToSkip, windowResizeCount]);
 
+  // Update the controller with our current state
+  const notify = useNotify();
+  useEffect(() => {
+    if(!notify) {
+      return;
+    }
+
+    notify(active, bounds, onClick);
+    return () => notify(false, [], () => {}); // Become inactive when we dismount
+  }, [active, bounds, notify]);
+
   return (
     <>
       <div
@@ -152,7 +164,7 @@ function SeeThrough({ children, active, onClick, maskColor, className, style, ch
         { children }
       </div>
 
-      { active && (
+      { (!notify && active) && (
         <NoopClassWrapper
           component={ PartialMask }
           key='mask'
@@ -204,7 +216,7 @@ SeeThrough.propTypes = {
   style: PropTypes.any,
 
   /**
-   * The color of the mask.
+   * The color of the mask. If you're using a SeeThroughController, you should pass this to that instead.
    * Supports all canvas fillStyle formats, e.g. "#AAA333", "red", "rgba(10, 12, 8, 0.2)", ...
    */
   maskColor: PropTypes.string,

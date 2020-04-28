@@ -3,27 +3,28 @@
     "title": "react-see-through",
     "description": "Draw attention to the important parts of your website",
     "menu": [],
-    "version": "0.5.0",
+    "version": "0.6.0",
     "repository": "https://github.com/andrew4699/react-see-through",
     "native": false,
     "themeConfig": {},
     "separator": "-",
     "base": "/react-see-through/",
     "src": "./src",
-    "dest": "./docs"
+    "dest": "./docs",
+    "public": "./"
   },
   "entries": [
     {
-      "key": "src/src/SeeThrough/SeeThrough.mdx",
+      "key": "src/src/SeeThrough.mdx",
       "value": {
         "name": "<SeeThrough>",
         "route": "/docs/see-through",
-        "id": "55113914b7b5f638fe27614456570a9d",
-        "filepath": "src/src/SeeThrough/SeeThrough.mdx",
-        "fullpath": "/home/andrew/workspace/react-see-through/src/SeeThrough/SeeThrough.mdx",
-        "link": "https://github.com/andrew4699/react-see-through/edit/master/src/src/src/SeeThrough/SeeThrough.mdx",
+        "id": "bb9606b0e5bd97e2c3a8e55afa81e229",
+        "filepath": "src/src/SeeThrough.mdx",
+        "fullpath": "/home/andrew/workspace/react-see-through/src/SeeThrough.mdx",
+        "link": "https://github.com/andrew4699/react-see-through/edit/master/src/src/src/SeeThrough.mdx",
         "hidden": false,
-        "slug": "src-src-see-through-see-through",
+        "slug": "src-src-see-through",
         "menu": "",
         "headings": [
           {
@@ -65,6 +66,62 @@
             "slug": "note-if-you-dont-know-what-depth-to-use-just-use-numberpositive_infinity-and-only-lower-it-if-things-get-slow",
             "depth": 4,
             "value": "NOTE: If you don't know what depth to use, just use  Number.POSITIVE_INFINITY  and only lower it if things get slow."
+          },
+          {
+            "slug": "multiple-active-seethroughs-at-once",
+            "depth": 2,
+            "value": "Multiple active SeeThroughs at once"
+          }
+        ]
+      }
+    },
+    {
+      "key": "src/src/SeeThroughController.mdx",
+      "value": {
+        "name": "<SeeThroughController>",
+        "route": "/docs/see-through-controller",
+        "id": "32755ef58262c70e6038331b18c5dc55",
+        "filepath": "src/src/SeeThroughController.mdx",
+        "fullpath": "/home/andrew/workspace/react-see-through/src/SeeThroughController.mdx",
+        "link": "https://github.com/andrew4699/react-see-through/edit/master/src/src/src/SeeThroughController.mdx",
+        "hidden": false,
+        "slug": "src-src-see-through-controller",
+        "menu": "",
+        "headings": [
+          {
+            "slug": "seethroughcontroller",
+            "depth": 1,
+            "value": "SeeThroughController"
+          },
+          {
+            "slug": "props",
+            "depth": 2,
+            "value": "Props"
+          },
+          {
+            "slug": "importing",
+            "depth": 2,
+            "value": "Importing"
+          },
+          {
+            "slug": "multiple-active-seethroughs-at-once",
+            "depth": 2,
+            "value": "Multiple active SeeThroughs at once"
+          },
+          {
+            "slug": "differences",
+            "depth": 3,
+            "value": "Differences:"
+          },
+          {
+            "slug": "when-should-you-have-multiple-active-seethroughs",
+            "depth": 2,
+            "value": "When should you have multiple active SeeThroughs?"
+          },
+          {
+            "slug": "how-do-different-seethroughs-know-their-active-prop-should-be-true-at-the-same-time",
+            "depth": 2,
+            "value": "How do different SeeThroughs know their \"active\" prop should be true at the same time?"
           }
         ]
       }
@@ -72,7 +129,7 @@
   ],
   "props": [
     {
-      "key": "src/SeeThrough/NoopClassWrapper.js",
+      "key": "src/NoopClassWrapper.js",
       "value": [
         {
           "description": "",
@@ -92,7 +149,7 @@
       ]
     },
     {
-      "key": "src/SeeThrough/SeeThrough.js",
+      "key": "src/SeeThrough.js",
       "value": [
         {
           "description": "",
@@ -123,7 +180,7 @@
                 "name": "func"
               },
               "required": false,
-              "description": "A function to call when the see-through component is clicked. This only works when the component is \"active\".\nThe function is passed the following arguments:\n\n   masked - a boolean indicating whether the click was on the masked (black) or unmasked (non-block) area",
+              "description": "A function to call when the see-through component is clicked. This only works when the component is \"active\".\nThe function is passed the following arguments:\n\n   masked - a boolean indicating whether the click was on the masked (black) or unmasked (non-black) area",
               "defaultValue": {
                 "value": "() => {}",
                 "computed": false
@@ -156,7 +213,7 @@
                 "name": "string"
               },
               "required": false,
-              "description": "The color of the mask.\nSupports all canvas fillStyle formats, e.g. \"#AAA333\", \"red\", \"rgba(10, 12, 8, 0.2)\", ...",
+              "description": "The color of the mask. If you're using a SeeThroughController, you should pass this to that instead.\nSupports all canvas fillStyle formats, e.g. \"#AAA333\", \"red\", \"rgba(10, 12, 8, 0.2)\", ...",
               "defaultValue": {
                 "value": "'rgba(0, 0, 0, 0.4)'",
                 "computed": false
@@ -167,7 +224,7 @@
                 "name": "number"
               },
               "required": false,
-              "description": "SeeThrough searches children in the DOM tree to determine the area to reveal. Suppose your DOM looks like this:\n\n   SeeThrough -> A -> B -> C -> D\n\nA depth of 3 means that the revealed area will be max_area(A, B, C).\n\nNormally a depth of 1 is enough because parents will be as big as their children. However, absolute/fixed\nchildren don't contribute to the parent's size so the depth needs to be large enough that the search sees them.",
+              "description": "SeeThrough searches children in the DOM tree to determine the area to reveal. Suppose your DOM looks like this:\n\n   SeeThrough -> A -> B -> C -> D\n\nA depth of 3 means that the revealed areas will be A, B, and C.\n\nNormally a depth of 1 is enough because parents will be as big as their children. However, absolute/fixed\nchildren don't contribute to the parent's size so the depth needs to be large enough that the search sees them.",
               "defaultValue": {
                 "value": "1",
                 "computed": false
@@ -184,6 +241,37 @@
               "description": "SeeThrough searches children in the DOM tree to determine the area to reveal (more details under \"childSearchDepth\").\nThis is a list of element tags that won't be traversed further down. **Note that the tags themselves will still be considered.**",
               "defaultValue": {
                 "value": "['svg']",
+                "computed": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "key": "src/SeeThroughController.js",
+      "value": [
+        {
+          "description": "",
+          "displayName": "SeeThroughController",
+          "methods": [],
+          "actualName": "SeeThroughController",
+          "props": {
+            "children": {
+              "type": {
+                "name": "any"
+              },
+              "required": false,
+              "description": "Anything. All <SeeThrough> elements under this will be tied to this controller and be able to\nbe active at the same time."
+            },
+            "maskColor": {
+              "type": {
+                "name": "string"
+              },
+              "required": false,
+              "description": "The color of the mask around all nested <SeeThrough>s.\nSupports all canvas fillStyle formats, e.g. \"#AAA333\", \"red\", \"rgba(10, 12, 8, 0.2)\", ...",
+              "defaultValue": {
+                "value": "'rgba(0, 0, 0, 0.4)'",
                 "computed": false
               }
             }

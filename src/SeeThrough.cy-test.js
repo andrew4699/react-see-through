@@ -3,6 +3,7 @@
 /* eslint-disable react/prop-types */
 
 import React, { Component } from 'react';
+import SeeThroughController from './SeeThroughController';
 import SeeThrough from './SeeThrough';
 import NoopClassWrapper from './NoopClassWrapper';
 import ReactTestUtils from 'react-dom/test-utils';
@@ -66,11 +67,15 @@ function expectBounds(element, expectedBounds) {
   // Overrides the previous render
   cy.render(<CompNoopWrapper>{ element }</CompNoopWrapper>);
 
-  return cy.get(CompNoopWrapper).then(tree => {
-    const partialMask = ReactTestUtils.findRenderedComponentWithType(tree, NoopClassWrapper);
-    const bounds = getMinimalCoveringRect(partialMask.props.exclude);
-    expect(bounds).to.deep.equal(expectedBounds);
-  });
+  // We need to wait for the SeeThroughController to have rendered a couple of times
+  return cy.wait(100).then(() => {
+    return cy.get(CompNoopWrapper).then(tree => {
+      const partialMask = ReactTestUtils.findRenderedComponentWithType(tree, NoopClassWrapper);
+      const bounds = getMinimalCoveringRect(partialMask.props.exclude);
+      expect(bounds).to.deep.equal(expectedBounds);
+    });
+  })
+
 }
 
 function expectNoCrash(element) {
@@ -278,6 +283,25 @@ describe('SeeThrough#childSearchDepth#textNodes', () => {
         This text should be longer than the box
       </SeeThrough>,
       { x: 0, y: 0, width: 207, height: 19 },
+    );
+  });
+});
+
+describe('SeeThrough#multiple', () => {
+  it('should correctly compute the bounds of multiple active SeeThroughs', () => {
+    expectBounds(
+      <SeeThroughController>
+        <div style={{ display: 'inline-block' }}>
+          <SeeThrough active>
+            { box(5, 5) }
+          </SeeThrough>
+
+          <SeeThrough active>
+            { box(5, 5) }
+          </SeeThrough>
+        </div>
+      </SeeThroughController>,
+      { x: 0, y: 0, width: 5, height: 10 },
     );
   });
 });
