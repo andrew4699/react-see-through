@@ -3,7 +3,7 @@
     "title": "react-see-through",
     "description": "Draw attention to the important parts of your website",
     "menu": [],
-    "version": "0.6.0",
+    "version": "0.7.0",
     "repository": "https://github.com/andrew4699/react-see-through",
     "native": false,
     "themeConfig": {},
@@ -149,6 +149,37 @@
       ]
     },
     {
+      "key": "src/SeeThroughController.js",
+      "value": [
+        {
+          "description": "",
+          "displayName": "SeeThroughController",
+          "methods": [],
+          "actualName": "SeeThroughController",
+          "props": {
+            "children": {
+              "type": {
+                "name": "any"
+              },
+              "required": false,
+              "description": "Anything. All <SeeThrough> elements under this will be tied to this controller and be able to\nbe active at the same time."
+            },
+            "maskColor": {
+              "type": {
+                "name": "string"
+              },
+              "required": false,
+              "description": "The color of the mask around all nested <SeeThrough>s.\nSupports all canvas fillStyle formats, e.g. \"#AAA333\", \"red\", \"rgba(10, 12, 8, 0.2)\", ...",
+              "defaultValue": {
+                "value": "'rgba(0, 0, 0, 0.4)'",
+                "computed": false
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
       "key": "src/SeeThrough.js",
       "value": [
         {
@@ -243,35 +274,15 @@
                 "value": "['svg']",
                 "computed": false
               }
-            }
-          }
-        }
-      ]
-    },
-    {
-      "key": "src/SeeThroughController.js",
-      "value": [
-        {
-          "description": "",
-          "displayName": "SeeThroughController",
-          "methods": [],
-          "actualName": "SeeThroughController",
-          "props": {
-            "children": {
-              "type": {
-                "name": "any"
-              },
-              "required": false,
-              "description": "Anything. All <SeeThrough> elements under this will be tied to this controller and be able to\nbe active at the same time."
             },
-            "maskColor": {
+            "interactive": {
               "type": {
-                "name": "string"
+                "name": "bool"
               },
               "required": false,
-              "description": "The color of the mask around all nested <SeeThrough>s.\nSupports all canvas fillStyle formats, e.g. \"#AAA333\", \"red\", \"rgba(10, 12, 8, 0.2)\", ...",
+              "description": "Whether or not you can interact (click/hover/etc) with elements in an **active** SeeThrough.\nYou can always interact with elements in an inactive SeeThrough.\n\nNote that if interactive, this SeeThrough's onClick method will **only** be called if the\nblack masked area is clicked.",
               "defaultValue": {
-                "value": "'rgba(0, 0, 0, 0.4)'",
+                "value": "false",
                 "computed": false
               }
             }

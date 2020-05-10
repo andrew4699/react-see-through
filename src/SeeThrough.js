@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import PartialMask from './PartialMask';
+import CanvasPartialMask from './CanvasPartialMask';
 import { withResizeDetector } from 'react-resize-detector';
 import NoopClassWrapper from './NoopClassWrapper';
 import { useNotify } from './SeeThroughController';
@@ -123,7 +123,7 @@ function useWindowResizeCount() {
   return windowResizeCount;
 }
 
-function SeeThrough({ children, active, onClick, maskColor, className, style, childSearchDepth, childTagsToSkip }) {
+function SeeThrough({ children, active, onClick, maskColor, className, style, childSearchDepth, childTagsToSkip, interactive }) {
   // We want to update the bounds when the window is resized
   const windowResizeCount = useWindowResizeCount();
 
@@ -166,11 +166,12 @@ function SeeThrough({ children, active, onClick, maskColor, className, style, ch
 
       { (!notify && active) && (
         <NoopClassWrapper
-          component={ PartialMask }
+          component={ CanvasPartialMask }
           key='mask'
           exclude={ bounds }
           onClick={ onClick }
           maskColor={ maskColor }
+          interactive={ interactive }
         />
       ) }
     </>
@@ -238,6 +239,15 @@ SeeThrough.propTypes = {
    * This is a list of element tags that won't be traversed further down. **Note that the tags themselves will still be considered.**
    */
   childTagsToSkip: PropTypes.arrayOf(PropTypes.string),
+
+  /**
+   * Whether or not you can interact (click/hover/etc) with elements in an **active** SeeThrough.
+   * You can always interact with elements in an inactive SeeThrough.
+   *
+   * Note that if interactive, this SeeThrough's onClick method will **only** be called if the
+   * black masked area is clicked.
+   */
+  interactive: PropTypes.bool,
 };
 
 SeeThrough.defaultProps = {
@@ -248,6 +258,7 @@ SeeThrough.defaultProps = {
   maskColor: 'rgba(0, 0, 0, 0.4)',
   childSearchDepth: 1,
   childTagsToSkip: ['svg'], // Children inside an SVG could have a lot of overflow. Lets skip them as a precaution.
+  interactive: false,
 };
 
 // withResizeDetector re-renders the component when its width/height change
