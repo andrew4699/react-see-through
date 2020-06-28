@@ -43,6 +43,28 @@ after installing.
 
 ---
 
+## Enable user interaction (click/hover/...) with SeeThrough elements
+#### NOTE: This gets slower with your page's total width/height and the number of active SeeThroughs at once. Read below about how it works to understand why.
+#### It should be fast enough in most cases but you should test it and determine if it's fast enough for your use case.
+
+<Playground>
+  {() => {
+    const [active, setActive] = useState(false);
+    return (
+      <div style={{ padding: '60px' }}>
+        <button onClick={ () => setActive(true) }>Activate</button>
+        <SeeThrough interactive active={ active }>
+          <div>Some text</div>
+          <div>Other text</div>
+          { active && <button onClick={ () => setActive(false) }>Close</button> }
+        </SeeThrough>
+      </div>
+    );
+  }}
+</Playground>
+
+---
+
 ## Absolute/fixed elements
 ### Uses childSearchDepth to explicitly search more children. See the props documentation at the top for more info.
 #### NOTE: If you don't know what depth to use, just use `Number.POSITIVE_INFINITY` and only lower it if things get slow.
@@ -68,3 +90,9 @@ after installing.
 
 ## Multiple active SeeThroughs at once
 Look at [SeeThroughController](/docs/see-through-controller) for examples on multiple active SeeThroughs
+
+## How do interactive SeeThroughs work?
+For non-interactive SeeThroughs a canvas is overlayed on the whole page and painted transparent in the locations of your SeeThrough elements.
+This can't be done for interactive SeeThroughs because having a canvas over everything prevents interaction.
+Thus, the way interactivity works is by creating several boxes around all of your SeeThrough elements.
+Computing this set of boxes is computationally expensive, scaling with page size and the number of active SeeThrough elements.

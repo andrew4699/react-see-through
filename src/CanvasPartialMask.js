@@ -83,9 +83,4 @@ CanvasPartialMask.propTypes = {
    * Same as SeeThrough.maskColor
    */
   maskColor: PropTypes.string.isRequired,
-
-  /**
-   * Same as SeeThrough.interactive
-   */
-  interactive: PropTypes.bool.isRequired,
 };

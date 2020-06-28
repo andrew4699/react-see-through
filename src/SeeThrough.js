@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CanvasPartialMask from './CanvasPartialMask';
+import MultiBoxPartialMask from './MultiBoxPartialMask';
 import { withResizeDetector } from 'react-resize-detector';
 import NoopClassWrapper from './NoopClassWrapper';
 import { useNotify } from './SeeThroughController';
+import { useWindowResizeCount } from './helpers';
 
 /**
  * Gets rid of non-integer values in our rectangles
@@ -103,26 +105,6 @@ function isSSR() {
   return typeof window === 'undefined';
 }
 
-/**
- * Manages a count of how many times the window has been resized since this component was mounted.
- * @returns Returns the count of resizes
- */
-function useWindowResizeCount() {
-  const [windowResizeCount, setWindowResizeCount] = useState(0);
-
-  useEffect(() => {
-    if(isSSR()) {
-      return;
-    }
-
-    const resizeHandler = () => setWindowResizeCount(windowResizeCount + 1);
-    window.addEventListener('resize', resizeHandler);
-    return () => window.removeEventListener('resize', resizeHandler);
-  }, [windowResizeCount]);
-
-  return windowResizeCount;
-}
-
 function SeeThrough({ children, active, onClick, maskColor, className, style, childSearchDepth, childTagsToSkip, interactive }) {
   // We want to update the bounds when the window is resized
   const windowResizeCount = useWindowResizeCount();
@@ -166,12 +148,11 @@ function SeeThrough({ children, active, onClick, maskColor, className, style, ch
 
       { (!notify && active) && (
         <NoopClassWrapper
-          component={ CanvasPartialMask }
+          component={ interactive ? MultiBoxPartialMask : CanvasPartialMask }
           key='mask'
           exclude={ bounds }
           onClick={ onClick }
           maskColor={ maskColor }
-          interactive={ interactive }
         />
       ) }
     </>

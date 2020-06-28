@@ -53,6 +53,21 @@
             "value": "Clicking on the masked (black) area stops the see-through effect."
           },
           {
+            "slug": "enable-user-interaction-clickhover-with-seethrough-elements",
+            "depth": 2,
+            "value": "Enable user interaction (click/hover/...) with SeeThrough elements"
+          },
+          {
+            "slug": "note-this-gets-slower-with-your-pages-total-widthheight-and-the-number-of-active-seethroughs-at-once-read-below-about-how-it-works-to-understand-why",
+            "depth": 4,
+            "value": "NOTE: This gets slower with your page's total width/height and the number of active SeeThroughs at once. Read below about how it works to understand why."
+          },
+          {
+            "slug": "it-should-be-fast-enough-in-most-cases-but-you-should-test-it-and-determine-if-its-fast-enough-for-your-use-case",
+            "depth": 4,
+            "value": "It should be fast enough in most cases but you should test it and determine if it's fast enough for your use case."
+          },
+          {
             "slug": "absolutefixed-elements",
             "depth": 2,
             "value": "Absolute/fixed elements"
@@ -71,6 +86,11 @@
             "slug": "multiple-active-seethroughs-at-once",
             "depth": 2,
             "value": "Multiple active SeeThroughs at once"
+          },
+          {
+            "slug": "how-do-interactive-seethroughs-work",
+            "depth": 2,
+            "value": "How do interactive SeeThroughs work?"
           }
         ]
       }
