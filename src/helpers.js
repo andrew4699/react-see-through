@@ -1,6 +1,14 @@
 import { useState, useEffect } from 'react';
 
 /**
+ * Copied from https://github.com/maslianok/react-resize-detector
+ * @returns whether or not this is being rendered by the server
+ */
+function isSSR() {
+  return typeof window === 'undefined';
+}
+
+/**
  * Manages a count of how many times the window has been resized since this component was mounted.
  * @returns Returns the count of resizes
  */
@@ -65,12 +73,8 @@ export function rectilinearDissection(source, holes) {
   const { x, y, width, height } = source;
   let search = { x, y };
 
-  while(true) {
-    // We're done if the search marker passed the bottom right of the screen
-    if(search.y === height) {
-      break;
-    }
-
+  // We're done if the search marker passed the bottom right of the screen
+  while(search.y < height) {
     // Create the initial rectangle
     const r = {
       ...search,

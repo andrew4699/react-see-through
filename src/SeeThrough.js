@@ -97,14 +97,6 @@ function findChildren(root, depth, childTagsToSkip, children) {
   }
 }
 
-/**
- * Copied from https://github.com/maslianok/react-resize-detector
- * @returns whether or not this is being rendered by the server
- */
-function isSSR() {
-  return typeof window === 'undefined';
-}
-
 function SeeThrough({ children, active, onClick, maskColor, className, style, childSearchDepth, childTagsToSkip, interactive }) {
   // We want to update the bounds when the window is resized
   const windowResizeCount = useWindowResizeCount();
