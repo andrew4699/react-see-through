@@ -66,6 +66,7 @@ export function rectilinearDissection(source, holes) {
 
     When we place a rectangle, it will move to the right of that rectangle while keeping the same y.
     If the search marker is ever placed where another rectangle is, it will also go to the right of that rectangle while keeping the same y.
+      The reason we only go to the right of the rectangle and can't completely skip ahead to the bottom-right is because the algorithm is incorrect if we skip to the bottom-right.
     If the search marker ever goes oustide the source rectangle, it returns to the left on the next y.
   */
 
@@ -109,7 +110,7 @@ export function rectilinearDissection(source, holes) {
     // Add this rectangle to our dissection
     R.push(r);
 
-    // Advance the search marker simply
+    // Advance the search marker
     search.x = r.x + r.width;
     if(search.x >= width) {
       search.x = source.x;
