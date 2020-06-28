@@ -1,24 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { createPortal } from 'react-dom';
 import PropTypes from 'prop-types';
+import { useContainer } from './helpers';
 
-/**
- * Manages an empty <div> as a child of the document body.
- * @returns a reference to the container Element or null if it hasn't been created yet.
- */
-function useContainer() {
-  const [container, setContainer] = useState(null);
-  useEffect(() => {
-    const newContainer = document.createElement('div');
-    document.body.appendChild(newContainer);
-    setContainer(newContainer);
-    return () => newContainer.remove();
-  }, []);
-
-  return container;
-}
-
-export default function PartialMask({ exclude, maskColor, onClick }) {
+// CanvasPartialMask masks part of a page by overlaying a canvas over it and making the
+// excluded areas transparent while the rest of the canvas is the maskColor.
+export default function CanvasPartialMask({ exclude, maskColor, onClick }) {
   // Setup a canvas to draw the mask
   const [canvas, setCanvas] = useState(null);
   useEffect(() => {
@@ -76,7 +63,7 @@ export default function PartialMask({ exclude, maskColor, onClick }) {
   );
 }
 
-PartialMask.propTypes = {
+CanvasPartialMask.propTypes = {
   /**
    * An array of sections that should NOT be masked. All values are in "px".
    */
@@ -90,15 +77,10 @@ PartialMask.propTypes = {
   /**
    * Same as SeeThrough.onClick
    */
-  onClick: PropTypes.func,
+  onClick: PropTypes.func.isRequired,
 
   /**
    * Same as SeeThrough.maskColor
    */
-  maskColor: PropTypes.string,
-};
-
-PartialMask.defaultProps = {
-  onClick: undefined, // Use SeeThrough defaults
-  maskColor: undefined, // Use SeeThrough defaults
+  maskColor: PropTypes.string.isRequired,
 };

@@ -1,6 +1,6 @@
 import React, { useState, useCallback, createContext, useContext } from 'react';
 import PropTypes from 'prop-types';
-import PartialMask from './PartialMask';
+import CanvasPartialMask from './CanvasPartialMask';
 import NoopClassWrapper from './NoopClassWrapper';
 
 const NotifyContext = createContext();
@@ -44,7 +44,7 @@ export default function SeeThroughController({ children, maskColor }) {
 
       { active && (
         <NoopClassWrapper
-          component={ PartialMask }
+          component={ CanvasPartialMask }
           exclude={ bounds }
           onClick={ onClick }
           maskColor={ maskColor }
